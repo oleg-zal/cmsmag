@@ -58,7 +58,7 @@
 function autoLoadMainClasses($class_name){
         $class_name = str_replace('\\', '/', $class_name);
         if(!@include_once $class_name.'.php'){
-            throw new RouteException('Не верный имени фаля или подключение '.$class_name);
+            throw new RouteException('Не верное имя файла или неверное подключение '.$class_name);
         }
     }
     spl_autoload_register('autoLoadMainClasses');
