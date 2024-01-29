@@ -10,8 +10,11 @@ use core\user\model\Model;
 abstract class BaseAdmin extends BaseController
 {
     protected $model;
+
     protected $table;
     protected $columns;
+    protected $data;
+
     protected $menu;
     protected $title;
 
@@ -50,6 +53,67 @@ abstract class BaseAdmin extends BaseController
         if(!$this->columns) {
             new RouteException('Не найдены поля в таблице - ' . $this->table, 2);
         }
+
+    }
+    protected function createData($arr=[], $add=true) {
+        $fields = [];
+        $order = [];
+        $order_direction = [];
+        if ($add) {
+            if(!$this->columns['id_row']) {
+                $this->data = [];
+                return;
+            }
+            $fields[] = $this->columns['id_row'] . ' as id';
+            if ($this->columns['name']) $fields['name'] = 'name';
+            if ($this->columns['img']) $fields['img'] = 'img';
+            if (count($fields) < 3) {
+                foreach ($this->columns as $key => $item) {
+                    if (!$fields['name'] && strpos($key, 'name') !==false) {
+                        $fields['name'] = $key . ' as name';
+                    }
+                    if (!$fields['img'] && strpos($key, 'img') === 0) {
+                        $fields['img'] = $key . ' as img';
+                    }
+                }
+            }
+            if ($arr['fields']) {
+                $fields = Settings::instance()->arrayMergenRecusive($fields, $arr['fields']);
+            }
+            if ($this->columns['parent_id']) {
+                if (!in_array('parent_id', $fields)) $fields[] = 'parent_id';
+            }
+            if ($this->columns['menu_position']) {
+                $order[] = 'menu_position';
+            } elseif ($this->columns['date']) {
+                if ($order) {
+                    $order_direction = ['ASC', 'DESC'];
+                } else {
+                    $order_direction = ['DESC'];
+                }
+                $order[] = 'date';
+            }
+            if ($arr['order']) {
+                $order = Settings::instance()->arrayMergenRecusive($order, $arr['order']);
+            }
+            if ($arr['order_direction']) {
+                $order_direction = Settings::instance()->arrayMergenRecusive($order_direction, $arr['order_direction']);
+            }
+
+        } else {
+            if (!$arr) {
+                $this->data = [];
+                return;
+            }
+            $fields = $arr['fields'];
+            $order = $arr['order'];
+            $order_direction = $arr['order_direction'];
+        }
+        $this->data = $this->model->get($this->table, [
+            'fields' => $fields,
+            'order' => $order,
+            'order_direction' => $order_direction
+        ]);
 
     }
 }
