@@ -129,4 +129,17 @@ abstract class BaseAdmin extends BaseController
         ]);
 
     }
+    protected function expansion($args=[]) {
+        $fileName = explode('_', $this->table);
+        $className = '';
+        foreach ( $fileName as $item) {
+            $className .= ucfirst($item);
+        }
+        $class = Settings::get('expansion') . $className . 'Expansion';
+        if (is_readable($_SERVER['DOCUMENT_ROOT'] . PATH . "{$class}.php" )) {
+            $class = str_replace('/', '\\', $class);
+            $exp = $class::instance();
+            $res = $exp->expansion($args);
+        }
+    }
 }
