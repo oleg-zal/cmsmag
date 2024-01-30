@@ -8,7 +8,7 @@ class GoodsExpansion
 {
     use Singleton;
     public function expansion($args = []) {
-        //$a = $args->data;
-        exit();
+        $this->title = "TESTED";
+
     }
 }

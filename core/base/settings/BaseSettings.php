@@ -11,7 +11,7 @@ trait BaseSettings
         instance as SingletonInstance;
     }
     private $bestSettings;
-    static private function instance(){
+    static public function instance(){
         if(self::$_instance instanceof self){
             return self::$_instance;
         }
