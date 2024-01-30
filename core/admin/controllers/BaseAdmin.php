@@ -25,7 +25,7 @@ abstract class BaseAdmin extends BaseController
             $this->model = Model::instance();
         }
         if (!$this->menu) {
-            $this->menu = Settings::get('ProjectTables');
+            $this->menu = Settings::get('projectTables');
         }
         $this->sendNoCacheHeaders();
     }
@@ -77,11 +77,16 @@ abstract class BaseAdmin extends BaseController
                     }
                 }
             }
-            if ($arr['fields']) {
-                $fields = Settings::instance()->arrayMergenRecusive($fields, $arr['fields']);
+            if (!empty($arr['fields'])) {
+                if (is_array($arr['fields'])) {
+                    $fields = Settings::instance()->arrayMergenRecusive($fields, $arr['fields']);
+                } else {
+                    $fields[] = $arr['fields'];
+                }
             }
             if ($this->columns['parent_id']) {
                 if (!in_array('parent_id', $fields)) $fields[] = 'parent_id';
+                $order[] = 'parent_id';
             }
             if ($this->columns['menu_position']) {
                 $order[] = 'menu_position';
@@ -93,11 +98,19 @@ abstract class BaseAdmin extends BaseController
                 }
                 $order[] = 'date';
             }
-            if ($arr['order']) {
-                $order = Settings::instance()->arrayMergenRecusive($order, $arr['order']);
+            if (!empty($arr['order'])) {
+                if (is_array($arr['order'])) {
+                    $order = Settings::instance()->arrayMergenRecusive($order, $arr['order']);
+                } else {
+                    $order[] = $arr['order'];
+                }
             }
-            if ($arr['order_direction']) {
-                $order_direction = Settings::instance()->arrayMergenRecusive($order_direction, $arr['order_direction']);
+            if (!empty($arr['order_direction'])) {
+                if (is_array($arr['order_direction'])) {
+                    $order_direction = Settings::instance()->arrayMergenRecusive($order_direction, $arr['order_direction']);
+                } else {
+                    $order_direction[] = $arr['order_direction'];
+                }
             }
 
         } else {
