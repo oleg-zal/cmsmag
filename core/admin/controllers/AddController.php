@@ -8,6 +8,7 @@ class AddController extends BaseAdmin
         if (!$this->userId) $this->execBase();
         $this->createTableData();
         $this->createOutputData();
+        $this->model->showForeignKeys($this->table);
     }
 
 }
