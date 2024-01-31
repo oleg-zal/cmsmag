@@ -86,7 +86,7 @@ abstract class BaseController
         }
         ob_start();
         if (!@include_once $path . '.php') {
-            throw new RouteException('otsustviye ' . $path);
+            throw new RouteException('Отсутствует ' . $path);
         }
         return ob_get_clean();
     }

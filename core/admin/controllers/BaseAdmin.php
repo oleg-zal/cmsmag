@@ -20,6 +20,9 @@ abstract class BaseAdmin extends BaseController
     protected $menu;
     protected $title;
 
+    protected $translate;
+    protected $blocks=[];
+
     protected function inputData() {
         $this->init(true);
         $this->title = 'VG engine';
@@ -35,6 +38,12 @@ abstract class BaseAdmin extends BaseController
         $this->sendNoCacheHeaders();
     }
     protected function outputData() {
+        if (!$this->content) {
+            $args = func_get_arg(0);
+            $vars = $args ? $args : [];
+            //if (!$this->template) $this->template = ADMIN_TEMPLATE . 'show';
+            $this->content = $this->render($this->template, $vars);
+        }
         $this->header = $this->render(ADMIN_TEMPLATE . 'include/header');
         $this->footer = $this->render(ADMIN_TEMPLATE . 'include/footer');
         return $this->render(ADMIN_TEMPLATE . 'layout/default');
@@ -49,12 +58,15 @@ abstract class BaseAdmin extends BaseController
     protected function execBase() {
         self::inputData();
     }
-    protected function createTableData() {
+    protected function createTableData($settings = false) {
         if (!$this->table) {
             if ($this->parameters) {
                 $this->table = array_keys($this->parameters)[0];
             } else {
-                $this->table = Settings::get('defaultTable');
+                if (!$settings) {
+                    $settings = Settings::instance();
+                }
+                $this->table = $settings::get('defaultTable');
             }
         }
         $this->columns = $this->model->showColumns($this->table);
@@ -93,6 +105,44 @@ abstract class BaseAdmin extends BaseController
                 return include $file;
             }
         }
+        return false;
+    }
+    protected function createOutputData($settings = false) {
+        if (!$settings) {
+            $settings = Settings::instance();
+        }
+        $blocks = $settings::get('blockNeedle');
+        $this->translate = $settings::get('translate');
+        if (!$blocks || !is_array($blocks)) {
+            foreach ($this->columns as $name => $item) {
+                if ($name === 'id_row') continue;
+                if (!$this->translate[$name]) {
+                    $this->translate[$name][] = $name;
+                }
+                $this->blocks[0][] = $name;
+            }
+            return;
+        }
+        $default = array_keys($blocks)[0];
+        foreach ($this->columns as $name => $item) {
+            if ($name === 'id_row') continue;
+            $insert = false;
+            foreach ($blocks as $block => $value) {
+                if (!array_key_exists($block, $this->blocks)) {
+                    $this->blocks[$block] = [];
+                }
+                if (in_array($name, $value)) {
+                    $this->blocks[$block][] = $name;
+                    $insert = true;
+                    break;
+                }
+            }
+            if (!$insert) $this->blocks[$default][] = $name;
+            if (!$this->translate[$name]) {
+                $this->translate[$name][] = $name;
+            }
+        }
+
         return false;
     }
 }
