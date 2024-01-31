@@ -86,7 +86,8 @@ class Settings
 	];
 	private $rootItems=[
 		'name'=>'Корневая',
-		'tables'=>['category', 'articles', 'products', 'page', 'goods', 'filters','socials']
+        'tables' => ['goods']
+		//'tables'=>['category', 'articles', 'products', 'page', 'goods', 'filters','socials']
 	];
     private $defaultTable='goods';
     private $expansion='core/admin/expansion/';
