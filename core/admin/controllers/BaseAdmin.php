@@ -52,7 +52,7 @@ abstract class BaseAdmin extends BaseController
     protected function createTableData() {
         if (!$this->table) {
             if ($this->parameters) {
-                $this->parameters = array_keys($this->parameters)[0];
+                $this->table = array_keys($this->parameters)[0];
             } else {
                 $this->table = Settings::get('defaultTable');
             }
