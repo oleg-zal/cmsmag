@@ -6,6 +6,8 @@ use core\base\settings\Settings;
 
 class AddController extends BaseAdmin
 {
+    protected $action = "add";
+
     protected function inputData(){
         if (!$this->userId) $this->execBase();
         $this->createTableData();
@@ -13,9 +15,7 @@ class AddController extends BaseAdmin
         $this->createMenuPosition();
         $this->createRadio();
         $this->createOutputData();
-        $this->manyAdd();
-        exit();
-        //$this->model->showForeignKeys($this->table);
+
     }
     protected function manyAdd() {
         $fields = [

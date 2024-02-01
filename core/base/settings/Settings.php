@@ -39,7 +39,7 @@ class Settings
     ];
     private $formTemplate=PATH.'core/admin/views/include/form_templates/';
     private $templateArr=[
-        'text'=>['name', 'pone', 'email','alias','external_alias'],
+        'text'=>['name', 'phone', 'email','alias','external_alias'],
         'textarea'=>['content', 'keywords'],
         'radio'=>['visible','top_menu'],
         'checkboxlist'=>['filters', 'goods'],

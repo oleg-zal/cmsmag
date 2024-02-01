@@ -24,6 +24,9 @@ abstract class BaseAdmin extends BaseController
     protected $translate;
     protected $blocks=[];
 
+    protected $templateArr;
+    protected $formTemplates;
+
     protected function inputData() {
         $this->init(true);
         $this->title = 'VG engine';
@@ -36,6 +39,8 @@ abstract class BaseAdmin extends BaseController
         if (!$this->adminPath) {
             $this->adminPath = PATH . Settings::get('routes')['admin']['alias'] . '/';
         }
+        if (!$this->templateArr) $this->templateArr = Settings::get('templateArr');
+        if (!$this->formTemplates) $this->formTemplates = Settings::get('formTemplate');
         $this->sendNoCacheHeaders();
     }
     protected function outputData() {

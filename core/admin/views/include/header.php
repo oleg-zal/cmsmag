@@ -65,7 +65,8 @@
         <div class="vg-wrap vg-firm-background-color1 vg-center vg-block vg-menu">
             <?php if($this->menu):?>
                 <?php foreach($this->menu as $table => $item):?>
-                    <a href="<?=$this->adminPath?>show/<?=$table?>" class="vg-wrap vg-element vg-full vg-center ">
+                    <?php $active = $table === $this->table ? 'active' : '' ?>
+                    <a href="<?=$this->adminPath?>show/<?=$table?>" class="vg-wrap vg-element vg-full vg-center <?=$active?>">
                         <div class="vg-element vg-half  vg-center">
                             <div>
                                 <img src="<?=PATH.ADMIN_TEMPLATE?>img/<?=$item['img'] ? $item['img'] : 'pages.png'?>" alt="pages">
