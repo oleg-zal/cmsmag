@@ -13,7 +13,18 @@ class AddController extends BaseAdmin
         $this->createMenuPosition();
         $this->createRadio();
         $this->createOutputData();
+        $this->manyAdd();
+        exit();
         //$this->model->showForeignKeys($this->table);
+    }
+    protected function manyAdd() {
+        $fields = [
+            0 => ['name' => 'Карты', 'content' => 'Карты игральные', 'img' => '1.jpg'],
+            1 => ['name' => 'Карты-2', 'content' => 'Карты игральные-2', 'img' => '2.jpg'],
+        ];
+        $this->model->add('goods', [
+            'fields' =>$fields
+        ]);
     }
     protected function createForeignProperty($arr, $rootItems) {
         if (in_array($this->table, $rootItems['tables'])) {
