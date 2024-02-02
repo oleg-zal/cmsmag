@@ -106,9 +106,10 @@ class Settings
         'email'=>['empty'=>true, 'trim'=>true],
         'password'=>['crypt'=>true, 'empty'=>true, 'trim'=>true, 'len'=>8],
         'price'=>['int'=>true],
-        'keywords'=>[],
+        'keywords'=>['count' => 70, 'trim'=>true],
         'content'=>['trim'=>true, ],
         'description'=>['count'=>160, 'trim'=>true],
+        'login' => ['empty'=>true, 'trim'=>true],
     ];
     private $messages='core/base/messages/';
     static public function get($property){

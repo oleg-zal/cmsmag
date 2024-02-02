@@ -10,6 +10,7 @@ class AddController extends BaseAdmin
 
     protected function inputData(){
         if (!$this->userId) $this->execBase();
+        $this->checkPost();
         $this->createTableData();
         $this->createForeignData();
         $this->createMenuPosition();
