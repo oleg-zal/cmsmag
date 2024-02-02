@@ -40,7 +40,7 @@ class Settings
     private $formTemplate=PATH.'core/admin/views/include/form_templates/';
     private $templateArr=[
         'text'=>['name'],
-        'textarea'=>['content'],
+        'textarea'=>['content', 'keywords'],
         'radio' => ['visible'],
         'select' => ['menu_position', 'parent_id'],
         'img' => ['img'],
