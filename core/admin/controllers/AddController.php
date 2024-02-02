@@ -125,8 +125,8 @@ class AddController extends BaseAdmin
             ]);
             $menu_pos = $res[0]['count']+1;
             for ($i=1; $i<=$menu_pos; $i++) {
-                $this->foreignData['menu_pos'][$i-1]['id'] = $i;
-                $this->foreignData['menu_pos'][$i-1]['name'] = $i;
+                $this->foreignData['menu_position'][$i-1]['id'] = $i;
+                $this->foreignData['menu_position'][$i-1]['name'] = $i;
             }
         }
         return;

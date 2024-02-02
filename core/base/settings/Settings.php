@@ -43,7 +43,8 @@ class Settings
         'textarea'=>['content'],
         'radio' => ['visible'],
         'select' => ['menu_position', 'parent_id'],
-        'img' => ['img']
+        'img' => ['img'],
+        'gallery_img' => ['gallery_img']
         /*'text'=>['name', 'phone', 'email','alias','external_alias'],*/
         /*'textarea'=>['content', 'keywords'],
         'radio'=>['visible','top_menu'],
@@ -73,11 +74,11 @@ class Settings
 		'name' => ['Название', 'Не более 100 символов'],
         'keywords'=>['Ключевые слова', 'Не более 70 символов'],
         'content'=>['Содержание', 'Не более 500 символов'],
-        'img'=>['Картинка'],
+        'img'=>['Картинка', 'jpg, png'],
         'gallery_img'=>['Галерея'],
         'visible'=>[],
-        'menu_position'=>[],
-        'parent_id'=>[],
+        'menu_position'=>['Номер в меню', 'Тест номер в меню'],
+        'parent_id'=>['Родитель', 'Тест родитель'],
         'top_menu'=>[],
 	];
     private $manyToMany=[
@@ -85,8 +86,8 @@ class Settings
 
     ];
 	private $blockNeedle=[
-		'vg-rows'=>[],
-		'vg-img'=>['img'],
+		'vg-rows'=>['img'],
+		'vg-img'=>['gallery_img'],
 		'vg-content'=>['content']
 	];
 	private $rootItems=[
