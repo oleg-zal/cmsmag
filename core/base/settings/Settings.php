@@ -39,13 +39,18 @@ class Settings
     ];
     private $formTemplate=PATH.'core/admin/views/include/form_templates/';
     private $templateArr=[
-        'text'=>['name', 'phone', 'email','alias','external_alias'],
-        'textarea'=>['content', 'keywords'],
+        'text'=>['name'],
+        'textarea'=>['content'],
+        'radio' => ['visible'],
+        'select' => ['menu_position', 'parent_id'],
+        'img' => ['img']
+        /*'text'=>['name', 'phone', 'email','alias','external_alias'],*/
+        /*'textarea'=>['content', 'keywords'],
         'radio'=>['visible','top_menu'],
         'checkboxlist'=>['filters', 'goods'],
         'select'=>['menu_position', 'parent_id'],
         'img'=>['img'],
-        'gallery_img'=>['gallery_img']
+        'gallery_img'=>['gallery_img']*/
     ];
     private $fileTemplates=[
         'img','gallery_img'
@@ -80,7 +85,7 @@ class Settings
 
     ];
 	private $blockNeedle=[
-		'vg-rows'=>['keywords'],
+		'vg-rows'=>[],
 		'vg-img'=>['img'],
 		'vg-content'=>['content']
 	];
