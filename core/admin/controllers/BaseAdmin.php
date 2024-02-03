@@ -21,6 +21,8 @@ abstract class BaseAdmin extends BaseController
     protected $menu;
     protected $title;
 
+    protected $fileArray;
+
     protected $messages ;
 
     protected $translate;
@@ -237,7 +239,7 @@ abstract class BaseAdmin extends BaseController
                         }
                         if ($validate[$key]['empty']) $this->emptyFields($item, $answer, $arr);
                         if ($validate[$key]['trim']) $arr[$key] = trim($item);
-                        if ($validate[$key]['trim']) $arr[$key] = $this->clearNum($item);
+                        if ($validate[$key]['int']) $arr[$key] = $this->clearNum($item);
                         if ($validate[$key]['count']) $this->countChar($item, $validate[$key]['count'], $answer, $arr);
                     }
                 }
@@ -245,7 +247,70 @@ abstract class BaseAdmin extends BaseController
         }
         return true;
     }
-    protected function editData() {
+    protected function editData($returnId=false) {
+        $id = false;
+        $method = 'add';
+        //$where = [];
+        $idRow = $_POST[$this->columns['id_row']];
+        if ($idRow) {
+            $id = is_numeric($idRow) ? $this->clearNum($idRow) : $this->clearStr($idRow);
+            if($id) {
+                $where = [$idRow => $id];
+                $method = 'edit';
+            }
+        }
+        foreach ($this->columns as $key => $item) {
+            if ($key === 'id_row') continue;
+            if ($item['Type'] == 'date' || $item['Type'] == 'datetime') {
+                !$_POST[$key] && $_POST[$key] = 'NOW()';
+            }
+        }
+        $this->createFile();
+        $this->createAlias();
+        $this->updateMenuPosition();
+        $except = $this->checkExceptFields();
+        $res_id = $this->model->$method($this->table, [
+            'files' => $this->fileArray,
+            'where' => $where,
+            'return_id' => true,
+            'except' => $except
+        ]);
+        if (!$id && $method === 'add') {
+            $_POST[$this->columns['id_row']] = $res_id;
+            $answerSuccess = $this->messages['addSuccess'];
+            $answerFail = $this->messages['addFail'];
+        } else {
+            $answerSuccess = $this->messages['editSuccess'];
+            $answerFail = $this->messages['editFail'];
+        }
+        $this->expansion(get_defined_vars());
+        $result = $this->checkAlias($_POST[$this->columns['id_row']]);
+        if ($res_id) {
+            $_SESSION['res']['answer'] = '<div class="success">' . $answerSuccess . '</div>';
+            if (!$returnId) $this->redirect();
+            return $_POST[$this->columns['id_row']];
+        } else {
+            $_SESSION['res']['answer'] = '<div class="error">' . $answerFail . '</div>';
+            if (!$returnId) $this->redirect();
+        }
+    }
+
+    /**
+     * @return void
+     */
+    protected function checkExceptFields() {
+        return;
+    }
+    protected function createFile() {
+
+    }
+    protected function updateMenuPosition() {
+
+    }
+    protected function createAlias($id=false) {
+
+    }
+    protected function checkAlias($id) {
 
     }
 }
