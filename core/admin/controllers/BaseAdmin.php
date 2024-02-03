@@ -179,6 +179,7 @@ abstract class BaseAdmin extends BaseController
             $this->clearPostFields($settings);
             $this->table = $this->clearStr($_POST['table']);
             unset($_POST['table']);
+            if (isset($_POST['parent_id']) && $_POST['parent_id'] == 0) unset($_POST['parent_id']);
             if ($this->table) {
                 $this->createTableData($settings);
                 $this->editData();
