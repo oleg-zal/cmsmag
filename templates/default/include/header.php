@@ -75,7 +75,7 @@
                 <div class="header__sidebar_btn">
                     <a href="http://somesite.ru/cart/">
                         <svg class="inline-svg-icon svg-basket">
-                            <use xlink:href="assets/img/icons.svg#basket"></use>
+                            <use xlink:href="<?=PATH . TEMPLATE?>assets/img/icons.svg#basket"></use>
                         </svg>
                     </a>
                 </div>
@@ -101,12 +101,12 @@
                 </div>
                 <div class="header__sidebar_btn"><a href="../../../index.php">
                         <svg class="inline-svg-icon svg-vk">
-                            <use xlink:href="assets/img/icons.svg#vk"></use>
+                            <use xlink:href="<?=PATH . TEMPLATE?>assets/img/icons.svg#vk"></use>
                         </svg>
                     </a></div>
                 <div class="header__sidebar_btn"><a href="../../../index.php">
                         <svg class="inline-svg-icon svg-facebook">
-                            <use xlink:href="assets/img/icons.svg#facebook"></use>
+                            <use xlink:href="<?=PATH . TEMPLATE?>assets/img/icons.svg#facebook"></use>
                         </svg>
                     </a></div>
             </div>
