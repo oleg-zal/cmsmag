@@ -32,10 +32,6 @@ class CreatesitemapController extends BaseAdmin
         $this->redirect();
     }
     protected function parsing($url, $index=0) {
-        if (mb_strlen(SITE_URL)+1 === mb_strlen($url) &&
-            mb_strrpos($url, '/') === mb_strlen($url)-1) {
-            return;
-        }
         $curl = curl_init();
         curl_setopt($curl,CURLOPT_URL, $url);
         curl_setopt($curl,CURLOPT_RETURNTRANSFER, true);
@@ -46,21 +42,50 @@ class CreatesitemapController extends BaseAdmin
 
         $out = curl_exec($curl);
         curl_close($url);
-        if (!preg_match("/Content-Type:\s+text\/html/uis", $out)) {
+        if (!preg_match('/Content-Type:\s+text\/html/ui', $out)) {
             unset($this->linkArr[$index]);
             $this->linkArr = array_values($this->linkArr);
             return;
         }
-        if (!preg_match("/HTTP\/\d\.?\d?\s+20\d/", $out) ) {
+        if (!preg_match('/HTTP\/\d\.?\d?\s+20\d/ui', $out) ) {
             $this->writeLog('Не корректная ссылка при парсинге - ' . $url, $this->parsingLogFile);
             unset($this->linkArr[$index]);
             $this->linkArr = array_values($this->linkArr);
             $_SESSION['res']['answer'] = '<div class="error">Incorrect link in parsing  - ' . $url .'</div>';
         }
+        $links = [];
+        $patern = '#<a\s*?[^>]*?href\s*?=(["\'])(.+?)\1[^>]*?>#ui';
 
+        preg_match_all($patern, $out, $links);
+
+        if ($links[2]) {
+            foreach ($links[2] as $link) {
+                //
+                if ($link === '/' || $link === SITE_URL1 . '/') continue;
+                foreach ($this->fileArr as $ext) {
+                    if ($ext) {
+                        $ext = addslashes($ext);
+                        $ext = str_replace('.', '\.', $ext);
+                        $patern = "#{$ext}\s*?$#ui";
+                        if (preg_match($patern, $link)) {
+                            continue 2;
+                        }
+                    }
+                }
+                if (strpos($link, '/') === 0) {
+                    $link = SITE_URL1 . $link;
+                }
+                if (!in_array($link, $this->linkArr) && $link !== '#' && strpos($link, SITE_URL1) === 0) {
+                    if ($this->filter($link)) {
+                        $this->linkArr[] = $link;
+                        //$this->parsing($link, count($this->linkArr) - 1);
+                    }
+                }
+            }
+        }
     }
     protected function filter($link) {
-
+        return true;
     }
     protected function createSitemap() {
 

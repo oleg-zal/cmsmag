@@ -1,7 +1,7 @@
 <?php
     defined('VG_ACCESS') or die('Access error');
     const SITE_URL = 'http://cmsmag.loc/';
-    const SITE_URL1 = 'https://liga.net/';
+    const SITE_URL1 = 'https://www.liga.net';
     const PATH = '/';
     const HOST = 'localhost';
     const USER = 'root';
