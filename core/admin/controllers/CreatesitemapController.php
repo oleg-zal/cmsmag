@@ -12,8 +12,8 @@ class CreatesitemapController extends BaseAdmin
     protected $parsingLogFile = 'parsing_log.txt';
     protected $fileArr = ['jpg', 'png', 'jpeg', 'gif', 'xls', 'xlsx', 'pdf', 'mp4', 'mpeg', 'mp3' ];
     protected $filterArr = [
-        'url' => [],
-        'get' => []
+        'url' => ['order'],
+        'get' => ['masha']
     ];
 
     protected function inputData() {
@@ -73,18 +73,41 @@ class CreatesitemapController extends BaseAdmin
                     }
                 }
                 if (strpos($link, '/') === 0) {
-                    $link = SITE_URL1 . $link;
+                    $link = rtrim(SITE_URL1, '/') . $link;
                 }
                 if (!in_array($link, $this->linkArr) && $link !== '#' && strpos($link, SITE_URL1) === 0) {
                     if ($this->filter($link)) {
                         $this->linkArr[] = $link;
-                        //$this->parsing($link, count($this->linkArr) - 1);
+                        $this->parsing($link, count($this->linkArr) - 1);
                     }
                 }
             }
         }
     }
     protected function filter($link) {
+        //
+        if ($this->filterArr) {
+            foreach ($this->filterArr as $type => $values) {
+                if ($values) {
+                    foreach ($values as $item) {
+                        $item = str_replace('/', '\/', addslashes($item));
+                        if ($type === 'url') {
+                            if (preg_match('#' . $item . '.*[\?|$]#ui', $link)) {
+                                return false;
+                            }
+                        }
+                        if ($type === 'get') {
+                             $patern = '#(\?|&amp;|=|&)'. $item .'(=|&amp;|&|$)#ui';
+                             if (preg_match($patern, $link)) {
+                                return false;
+                             }
+                        }
+                    }
+                }
+            }
+        }
+
+
         return true;
     }
     protected function createSitemap() {
