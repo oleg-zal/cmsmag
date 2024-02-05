@@ -66,7 +66,7 @@ class CreatesitemapController extends BaseAdmin
                     if ($ext) {
                         $ext = addslashes($ext);
                         $ext = str_replace('.', '\.', $ext);
-                        $patern = "#{$ext}\s*?$#ui";
+                        $patern = "#{$ext}\s*?$|\?[^\/]#ui";
                         if (preg_match($patern, $link)) {
                             continue 2;
                         }
@@ -92,7 +92,7 @@ class CreatesitemapController extends BaseAdmin
                     foreach ($values as $item) {
                         $item = str_replace('/', '\/', addslashes($item));
                         if ($type === 'url') {
-                            if (preg_match('#' . $item . '.*[\?|$]#ui', $link)) {
+                            if (preg_match('#^[^\?]*' . $item . '#ui', $link)) {
                                 return false;
                             }
                         }
@@ -106,8 +106,6 @@ class CreatesitemapController extends BaseAdmin
                 }
             }
         }
-
-
         return true;
     }
     protected function createSitemap() {
