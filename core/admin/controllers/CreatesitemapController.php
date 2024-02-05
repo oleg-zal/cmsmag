@@ -22,6 +22,8 @@ class CreatesitemapController extends BaseAdmin
             $_SESSION['res']['answer'] = '<div class="error">Library CURL is Absent</div>';
             $this->redirect();
         }
+        if (!$this->userId) $this->execBase();
+        if (!$this->checkParsingTable()) return false;
         set_time_limit(0);
         if (file_exists($_SERVER['DOCUMENT_ROOT'] . PATH . 'log/' . $this->parsingLogFile)) {
             @unlink($_SERVER['DOCUMENT_ROOT'] . PATH . 'log/' . $this->parsingLogFile);
@@ -104,6 +106,17 @@ class CreatesitemapController extends BaseAdmin
                         }
                     }
                 }
+            }
+        }
+        return true;
+    }
+    protected function checkParsingTable() {
+        $tables = $this->model->showTables();
+        if (!in_array('parsing_data', $tables)) {
+            $query = "CREATE TABLE parsing_data (all_links text, temp_links text)";
+            if (!$this->model->query($query, 'c') ||
+                !$this->model->add('parsing_data', ['fields' => ['all_links' => '', 'temp_links' => '']])) {
+                return false;
             }
         }
         return true;
