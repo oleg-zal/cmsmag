@@ -129,8 +129,8 @@ class CreatesitemapController extends BaseAdmin
             curl_multi_remove_handle($curlMulty, $curl[$i]);
             curl_close($curl[$i]);
             //
-            if (!preg_match('/Content-Type:\s+text\/html/ui', $result[$i])) {
-                $this->cancel(0, "Incorrent content type $url");
+            if (!preg_match('/Content-Type:\s*text\/html/ui', $result[$i])) {
+                $this->cancel(0, "Incorrect content type $url");
                 continue;
             }
             //
@@ -232,7 +232,36 @@ class CreatesitemapController extends BaseAdmin
         }
     }
 
-    protected function createSitemap() {
+    protected function createSitemap()
+    {
+        $dom = new \DOMDocument('1.0', 'UTF-8');
+        $dom->formatOutput = true;
 
+        $root = $dom->createElement('urlset');
+        $root->setAttribute('xmlns', 'http://www.sitemaps.org/schemas/sitemap/0.9');
+        $root->setAttribute('xmlns:xls', 'http://w3.org/2001/XMLSchema-instance');
+        $root->setAttribute('xsi:schemaLocation', 'http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd');
+
+        $dom->appendChild($root);
+        $sxe = simplexml_import_dom($dom);
+
+        if ($this->all_links) {
+            $data = new \DateTime();
+            $lastMod = $data->format('Y-m-d') . 'T' . $data->format('H:i:s+01:00');
+            foreach ($this->all_links as $item) {
+                $elem = trim(mb_substr($item, mb_strlen(SITE_URL1)), '/');
+                $elem = explode('/', $elem);
+                $count = '0.' . (count($elem) - 1);
+                $priority = 1 - (float)$count;
+                if ($priority == 1) $priority = '1.0';
+
+                $urlMain = $sxe->addChild('url');
+                $urlMain->addChild('loc', htmlspecialchars($item));
+                $urlMain->addChild('lastmod', $lastMod);
+                $urlMain->addChild('changefreq', 'weekly');
+                $urlMain->addChild('priority', $priority);
+            }
+        }
+        $dom->save($_SERVER['DOCUMENT_ROOT'] . PATH . 'log/sitemap.xml');
     }
 }
