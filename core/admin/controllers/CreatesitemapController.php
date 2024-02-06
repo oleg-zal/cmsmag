@@ -68,7 +68,12 @@ class CreatesitemapController extends BaseAdmin
                 ]);
             }
         }
-
+        $this->model->edit('parsing_data', [
+            'fields' => [
+                'temp_links' => '',
+                'all_links'  => ''
+            ]
+        ]);
         $this->createSitemap();
         !$_SESSION['res']['answer'] && $_SESSION['res']['answer'] = '<div class="success">Sitemap is created</div>';
         $this->redirect();
@@ -108,7 +113,7 @@ class CreatesitemapController extends BaseAdmin
                     if ($ext) {
                         $ext = addslashes($ext);
                         $ext = str_replace('.', '\.', $ext);
-                        $patern = "#{$ext}\s*?$|\?[^\/]#ui";
+                        $patern = "#{$ext}(\s*?$|\?[^\/]*$)#ui";
                         if (preg_match($patern, $link)) {
                             continue 2;
                         }
@@ -117,7 +122,9 @@ class CreatesitemapController extends BaseAdmin
                 if (strpos($link, '/') === 0) {
                     $link = rtrim(SITE_URL1, '/') . $link;
                 }
-                if (!in_array($link, $this->all_links) && $link !== '#' && strpos($link, SITE_URL1) === 0) {
+                if (!in_array($link, $this->all_links) &&
+                    $link !== '#' &&
+                    strpos($link, SITE_URL1) === 0) {
                     if ($this->filter($link)) {
                         $this->all_links[] = $link;
                         $this->parsing($link, count($this->all_links) - 1);
