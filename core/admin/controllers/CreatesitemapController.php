@@ -122,8 +122,10 @@ class CreatesitemapController extends BaseAdmin
                 if (strpos($link, '/') === 0) {
                     $link = rtrim(SITE_URL1, '/') . $link;
                 }
+                $siteUrl = mb_str_replace('/', '\/', SITE_URL1);
+                $siteUrl = mb_str_replace('.', '\.', $siteUrl);
                 if (!in_array($link, $this->all_links) &&
-                    $link !== '#' &&
+                    !preg_match("/^($siteUrl)?\/?#[^\/]*$/ui", $link) &&
                     strpos($link, SITE_URL1) === 0) {
                     if ($this->filter($link)) {
                         $this->all_links[] = $link;
