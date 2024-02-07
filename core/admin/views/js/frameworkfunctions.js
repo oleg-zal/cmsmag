@@ -10,7 +10,7 @@
     let body = '';
     if (typeof set.data !=='undefined' && set.data) {
         for (let i in set.data) {
-            body = '&' + i + set.data[i];
+            body += `&${i}=${set.data[i]}`;
         }
         body = body.substr(1);
     }
@@ -35,6 +35,7 @@
         if (!contentType) {
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; cherset=UTF-8');
         }
+        xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
         xhr.onload = function () {
             if (this.status >=200 && this.status < 300) {
                 if (/fatal\s+?error/ui.test(this.response)) {

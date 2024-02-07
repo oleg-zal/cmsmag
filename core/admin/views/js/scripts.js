@@ -1,6 +1,11 @@
 document.querySelector('.sitemap-button').onclick = (e) => {
     e.preventDefault();
-    Ajax({type: 'POST'})
+    createSiteMap();
+}
+let links_counter = 0;
+function createSiteMap() {
+    links_counter++;
+    Ajax({data: {ajax: 'sitemap', links_counter: links_counter}})
         .then((res) => {
             console.log('SUCCESS: ' + res);
         })
