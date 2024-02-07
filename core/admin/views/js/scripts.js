@@ -11,5 +11,6 @@ function createSiteMap() {
         })
         .catch((res) => {
             console.log('ERROR: ' + res);
+            createSiteMap()
         })
 }

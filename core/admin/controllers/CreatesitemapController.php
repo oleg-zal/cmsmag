@@ -61,13 +61,13 @@ class CreatesitemapController extends BaseAdmin
                 }
             } else {
                 $this->parsing($links);
-                $this->model->edit('parsing_data', [
-                    'fields' => [
-                        'temp_links' => json_encode($this->temp_links),
-                        'all_links'  => json_encode($this->all_links)
-                    ]
-                ]);
             }
+            $this->model->edit('parsing_data', [
+                'fields' => [
+                    'temp_links' => json_encode($this->temp_links),
+                    'all_links'  => json_encode($this->all_links)
+                ]
+            ]);
         }
         $this->model->edit('parsing_data', [
             'fields' => [
@@ -213,7 +213,7 @@ class CreatesitemapController extends BaseAdmin
     protected function checkParsingTable() {
         $tables = $this->model->showTables();
         if (!in_array('parsing_data', $tables)) {
-            $query = "CREATE TABLE parsing_data (all_links text, temp_links text)";
+            $query = "CREATE TABLE parsing_data (all_links longtext, temp_links longtext)";
             if (!$this->model->query($query, 'c') ||
                 !$this->model->add('parsing_data', ['fields' => ['all_links' => '', 'temp_links' => '']])) {
                 return false;
