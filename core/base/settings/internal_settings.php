@@ -18,7 +18,7 @@
         ],
         'script'=>[
             'js/frameworkfunctions.js', 'js/scripts.js',
-            'js/tinymce/tinymce.min.js', 'js/tinymce/tinymce.init.js'
+            /*'js/tinymce/tinymce.min.js', 'js/tinymce/tinymce.init.js'*/
         ]
     ];
     const USER_CSS_JS = [
