@@ -8,6 +8,6 @@ class AjaxController extends BaseAjax
 {
     public function ajax(): string
     {
-        return 'user';
+        return 'USER AJAX';
     }
 }
