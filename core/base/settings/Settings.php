@@ -42,6 +42,7 @@ class Settings
         'text'=>['name'],
         'textarea'=>['content', 'keywords'],
         'radio' => ['visible'],
+        'checkboxlist' => ['filters'],
         'select' => ['menu_position', 'parent_id'],
         'img' => ['img'],
         'gallery_img' => ['gallery_img']
@@ -86,8 +87,8 @@ class Settings
 
     ];
 	private $blockNeedle=[
-		'vg-rows'=>['img'],
-		'vg-img'=>['gallery_img'],
+		'vg-rows'=>[],
+		'vg-img'=>['img'],
 		'vg-content'=>['content']
 	];
 	private $rootItems=[
