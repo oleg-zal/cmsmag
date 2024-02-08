@@ -58,7 +58,7 @@ class Settings
         'img','gallery_img'
     ];
     private $projectTables=[
-        'goods'=>['name'=>'Goods'],
+        'goods'=>['name'=>'Товары'],
 		'category'=>[
 			'name'=>'Категории',
 			'img'=>''
@@ -67,7 +67,7 @@ class Settings
 			'name'=>'Тавари',
 			'img'=>''
 			],
-        'filters'=>['name'=>'filter'],
+        'filters'=>['name'=>'Фильтры'],
         'settings'=>['name'=>'Настройки системы'],
         'socials'=>[]
     ];

@@ -16,6 +16,7 @@ class AddController extends BaseAdmin
         $this->createMenuPosition();
         $this->createRadio();
         $this->createOutputData();
+        $this->createManyToMany();
 
     }
     protected function manyAdd() {
