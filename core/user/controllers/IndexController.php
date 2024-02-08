@@ -9,6 +9,9 @@ class IndexController extends BaseUser
      * @throws \core\base\exceptions\RouteException
      */
     protected function inputData(){
+        parent::inputData();
+    }
+    protected function testRequest() {
         $model = Model::instance();
         $res = $model->get('goods', [
             'where' => ['id' => '1,2'],
@@ -25,9 +28,10 @@ class IndexController extends BaseUser
                 ]
             ],
             'join_structure' => true,
-            'order' => 'RAND()'
+            'order' => 'id',
+            'order_direction' => 'ASC'
         ]);
-        parent::inputData();
+        return $res;
     }
 
 }
