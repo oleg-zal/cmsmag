@@ -474,7 +474,8 @@ abstract class BaseAdmin extends BaseController
                                 }
                             }
                         }
-                    } elseif ($orderData['parent_id']) {
+                    }
+                    elseif ($orderData['parent_id']) {
                         $parent = $tables[$otherKey];
                         $keys = $this->model->showForeignKeys($tables[$otherKey]);
                         if ($keys) {
@@ -527,12 +528,48 @@ abstract class BaseAdmin extends BaseController
                                 }
                             }
                         } else {
-
+                            $parentOrderData = $this->createOrderData($parent);
+                            $data = $this->model->get($parent, [
+                                'fields' => [$parentOrderData['name']],
+                                'join'  => [
+                                    $tables[$otherKey] => [
+                                        'fields' => [$orderData['columns']['id_row'], $orderData['name']],
+                                        'on'    => [$parentOrderData['columns']['id_row'], $orderData['parent_id']]
+                                    ]
+                                ],
+                                'join_structure' => true
+                            ]);
+                            foreach ($data as $key => $item) {
+                                if (!empty($item['join'][$tables[$otherKey]])) {
+                                    $this->foreignData[$tables[$otherKey]][$key]['name'] = $item['name'];
+                                    $this->foreignData[$tables[$otherKey]][$key]['sub'] = $item['join'][$tables[$otherKey]];
+                                    foreach ($item['join'][$tables[$otherKey]] as $value) {
+                                        if (in_array($value['id'], $foreigh)) {
+                                            $this->data[$tables[$otherKey]][$key][] = $value['id'];
+                                        }
+                                    }
+                                }
+                            }
                         }
-                        exit;
+                    }
+                    else {
+                        $data = $this->model->get($tables[$otherKey], [
+                            'fields' => [$orderData['columns']['id_row'] . ' as id', $orderData['name'], $orderData['parent_id']],
+                            'order' => $orderData['order']
+                        ]);
+                        if ($data) {
+                            $this->foreignData[$tables[$otherKey]][$tables[$otherKey]]['name'] = 'Выбрать';
+                            foreach ($data as $item) {
+                                $this->foreignData[$tables[$otherKey]][$tables[$otherKey]]['sub'][] = $item;
+                                if (in_array($item['id'], $foreigh)) {
+                                    $this->foreignData[$tables[$otherKey]][$tables[$otherKey]][] = $item['id'];
+                                }
+                            }
+                        }
                     }
                 }
             }
         }
+        exit;
     }
 }
