@@ -93,7 +93,7 @@ class Settings
 	];
 	private $rootItems=[
 		'name'=>'Корневая',
-        'tables' => ['goods', 'category']
+        'tables' => ['goods', 'filters']
 		//'tables'=>['category', 'articles', 'products', 'page', 'goods', 'filters','socials']
 	];
     private $defaultTable='goods';

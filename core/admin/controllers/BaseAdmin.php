@@ -272,7 +272,7 @@ abstract class BaseAdmin extends BaseController
         }
         $this->createFile();
         $this->createAlias();
-        $this->updateMenuPosition();
+        $this->updateMenuPosition($id);
         $except = $this->checkExceptFields();
         $res_id = $this->model->$method($this->table, [
             'files' => $this->fileArray,
@@ -322,7 +322,19 @@ abstract class BaseAdmin extends BaseController
         $fileEdit = new FilesEdit();
         $this->fileArray = $fileEdit->addFile();
     }
-    protected function updateMenuPosition() {
+    protected function updateMenuPosition($id = false) {
+        if (isset($_POST['menu_position'])) {
+            $where = false;
+            if ($id && $this->columns['id_row']) $where = [$this->columns['id_row'] => $id];
+            if (array_key_exists('parent_id', $_POST)) {
+                $this->model->updateMenuPosition($this->table, 'menu_position', $where,
+                    $_POST['menu_position'], ['where' => 'parent_id'] );
+            } else {
+                $this->model->updateMenuPosition($this->table, 'menu_position', $where, $_POST['menu_position']);
+            }
+        }
+
+
 
     }
     protected function createAlias($id=false) {
