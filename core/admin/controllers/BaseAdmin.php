@@ -457,6 +457,7 @@ abstract class BaseAdmin extends BaseController
                             'order' => $orderData['order']
                         ]);
                         if ($data) {
+                            $this->foreignData[$tables[$otherKey]][$tables[$otherKey]]['name'] = 'Выбрать';
                             foreach ($data as $item) {
                                 if ($tables['type'] === 'root' && $orderData['parent_id']) {
                                     if ($item[$orderData['parent_id']] === null) {
@@ -570,6 +571,5 @@ abstract class BaseAdmin extends BaseController
                 }
             }
         }
-        exit;
     }
 }
