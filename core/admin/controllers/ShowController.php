@@ -12,7 +12,7 @@ class ShowController extends BaseAdmin
         $this->createTableData();
         $this->createData(['fields' => ['content', 'menu_position']]);
         //print_arr($this->data);
-        return $this->expansion(get_defined_vars());;
+        return $this->expansion(get_defined_vars());
     }
 
     protected function createData($arr=[]) {
