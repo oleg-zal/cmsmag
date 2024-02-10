@@ -271,6 +271,9 @@ abstract class BaseAdmin extends BaseController
             }
         }
         $this->createFile();
+        if ($id && method_exists($this, 'checkFiles')) {
+            $this->checkFiles($id);
+        }
         $this->createAlias();
         $this->updateMenuPosition($id);
         $except = $this->checkExceptFields();
