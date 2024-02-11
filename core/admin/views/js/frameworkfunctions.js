@@ -51,3 +51,9 @@
         xhr.send(body);
     });
  }
+ function isEmpty(arr) {
+    for (i in arr) {
+        return false
+    }
+    return true;
+ }

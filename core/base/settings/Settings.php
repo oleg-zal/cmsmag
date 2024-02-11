@@ -45,7 +45,7 @@ class Settings
         'checkboxlist' => ['filters'],
         'select' => ['menu_position', 'parent_id'],
         'img' => ['img', 'main_img'],
-        'gallery_img' => ['gallery_img', 'new_gallsry_img']
+        'gallery_img' => ['gallery_img', 'new_gallery_img']
         /*'text'=>['name', 'phone', 'email','alias','external_alias'],*/
         /*'textarea'=>['content', 'keywords'],
         'radio'=>['visible','top_menu'],
