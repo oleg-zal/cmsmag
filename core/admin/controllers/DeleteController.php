@@ -118,7 +118,7 @@ class DeleteController extends BaseAdmin
                     foreach ($data as $key => $value) {
                         if ($item === $value) {
                             $updateFlag = true;
-                            @unlink($_SERVER['DOCUMENT_ROOT'] . PATH . UPLOAD_DIR . $value);
+                            @unlink($_SERVER['DOCUMENT_ROOT'] . PATH . UPLOAD_DIR . $item);
                             unset($data[$key]);
                             $this->data[$row] = $data ? json_encode($data) : 'NULL';
                             break;

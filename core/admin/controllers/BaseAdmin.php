@@ -37,6 +37,12 @@ abstract class BaseAdmin extends BaseController
     protected $noDelete;
 
     protected function inputData() {
+        if (!MS_MODE) {
+            $userAgent = $_SERVER['HTTP_USER_AGENT'];
+            if (preg_match('/msie|trident.+?rv\s*:/i', $userAgent)) {
+                exit('Вы используете устаревшую версию браузера');
+            }
+        }
         $this->init(true);
         $this->title = 'VG engine';
         if (!$this->model) {
