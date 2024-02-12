@@ -28,7 +28,7 @@ class Model extends BaseModel
             $update_rows['operand'] = isset($update_rows['operand']) ? $update_rows['operand'] : ['='];
             if ($where) {
                 $old_data = $this->get($table, [
-                    'fields' => [$update_rows[$where], $row],
+                    'fields' => [$update_rows['where'], $row],
                     'where' => $where
                 ])[0];
                 $start_pos = $old_data[$row];

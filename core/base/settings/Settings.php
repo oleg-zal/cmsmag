@@ -58,6 +58,8 @@ class Settings
         'img','gallery_img'
     ];
     private $projectTables=[
+        'articles' => ['name' => 'Статьи'],
+        'pages' => ['name' => 'Страницы'],
         'goods'=>['name'=>'Товары'],
 		'category'=>[
 			'name'=>'Категории',
@@ -78,8 +80,8 @@ class Settings
         'img'=>['Картинка', 'jpg, png'],
         'gallery_img'=>['Галерея'],
         'visible'=>[],
-        'menu_position'=>['Номер в меню', 'Тест номер в меню'],
-        'parent_id'=>['Родитель', 'Тест родитель'],
+        'menu_position'=>['Номер в меню', ''],
+        'parent_id'=>['Родитель', ''],
         'top_menu'=>[],
 	];
     private $manyToMany=[
@@ -93,7 +95,7 @@ class Settings
 	];
 	private $rootItems=[
 		'name'=>'Корневая',
-        'tables' => ['goods', 'filters']
+        'tables' => ['goods', 'filters', 'articles', 'pages']
 		//'tables'=>['category', 'articles', 'products', 'page', 'goods', 'filters','socials']
 	];
     private $defaultTable='goods';

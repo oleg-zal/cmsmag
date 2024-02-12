@@ -69,7 +69,7 @@ function createFile() {
                     for (let i in fileStore) {
                         if ( fileStore.hasOwnProperty(i) ) {
                             formData.delete(i);
-                            let rowName = i.replace(/[/[/]]/g, '');
+                            let rowName = i.replace(/[\[\]]/g, '');
                             fileStore[i].forEach((item, index) => {
                                 formData.append(`${rowName}[${index}]`, item)
                             });
