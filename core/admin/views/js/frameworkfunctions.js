@@ -69,3 +69,7 @@
     }
     return true;
  }
+ function errorAllert() {
+    alert('Произошла внутренняя ошибка');
+    return false;
+ }
