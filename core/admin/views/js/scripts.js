@@ -76,6 +76,22 @@ function createFile() {
                         }
                     }
                     formData.append('ajax', 'editData');
+                    Ajax({
+                        url: this.getAttribute('action'),
+                        type: 'post',
+                        data: formData,
+                        processData: false,
+                        contentType: false
+                    }).then(res => {
+                        try {
+                            res = JSON.parse(res);
+                            if (!res.success) throw new Error();
+                            location.reload();
+                        }
+                        catch (e) {
+                            elert('Произошла внутренняя ошибка');
+                        }
+                    })
                 }
             }
         }
