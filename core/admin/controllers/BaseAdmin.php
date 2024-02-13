@@ -691,7 +691,7 @@ abstract class BaseAdmin extends BaseController
             }
             $rootItems = $settings::get('rootItems');
             if ($this->columns['parent_id']) {
-                if (in_array($this->table, $rootItems['tables'])) {
+                if (in_array($this->table, $rootItems['tables']) && empty($this->data['parent_id'])) {
                     $where = "parent_id IS NULL OR parent_id = 0";
                 } else {
                     $parent = $this->model->showForeignKeys($this->table, 'parent_id')[0];
