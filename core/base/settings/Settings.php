@@ -98,7 +98,7 @@ class Settings
         'tables' => ['goods', 'filters', 'articles', 'pages']
 		//'tables'=>['category', 'articles', 'products', 'page', 'goods', 'filters','socials']
 	];
-    private $defaultTable='goods';
+    private $defaultTable='articles';
     private $expansion='core/admin/expansion/';
 	private $radio=[
 		'visible'=>['Нет','Да', 'default'=>'Да'],

@@ -38,7 +38,7 @@
             for (let i in set.headers) {
                 if (set.headers.hasOwnProperty(i)) {
                     xhr.setRequestHeader(i, set.headers[i]);
-                    if (i.toLowerCase() === content-type) contentType = true;
+                    if (i.toLowerCase() === 'content-type') contentType = true;
                 }
             }
         }
