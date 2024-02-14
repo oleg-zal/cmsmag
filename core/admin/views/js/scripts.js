@@ -259,7 +259,22 @@ let searchResultHover = (() => {
         }
     };
 })()
+createFile();
 changeMenuPosition();
 blockParameters();
 showHideMenuSearch();
 searchResultHover();
+//
+let galleries = document.querySelectorAll('.gallery_container');
+if (galleries.length) {
+    galleries.forEach(item => {
+        item.sortable({
+            excludedElements: 'label .empty_container',
+            stop: function (dragEl) {
+                /*console.log(this);
+                console.log(dragEl)*/
+            }
+        });
+    })
+}
+document.querySelector('.vg-rows > div').sortable();
