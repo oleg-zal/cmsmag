@@ -71,8 +71,7 @@ function createFile() {
         if (form) {
             form.onsubmit = function (e) {
                 createJsSortable(form);
-                e.preventDefault()
-                return false;
+
                 if ( !isEmpty(fileStore) ) {
                     e.preventDefault();
                     let formData = new FormData(this);
