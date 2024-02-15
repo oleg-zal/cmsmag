@@ -301,11 +301,30 @@ let searchResultHover = (() => {
         }
     };
 })()
+function search() {
+    let searchInput = document.querySelector('input[name=search]');
+    if (searchInput) {
+        searchInput.oninput = () => {
+            if (searchInput.value.length > 1) {
+                Ajax({
+                    data: {
+                        data: searchInput.value,
+                        table: document.querySelector('input[name="search_table"]').value ,
+                        'ajax': 'search'
+                    }
+                }).then(res => {
+                    console.log(res);
+                })
+            }
+        };
+    }
+}
 createFile();
 changeMenuPosition();
 blockParameters();
 showHideMenuSearch();
 searchResultHover();
+search();
 //
 let galleries = document.querySelectorAll('.gallery_container');
 if (galleries.length) {
@@ -319,4 +338,4 @@ if (galleries.length) {
         });
     })
 }
-document.querySelector('.vg-rows > div').sortable();
+/*document.querySelector('.vg-rows > div').sortable();*/
