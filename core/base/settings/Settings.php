@@ -65,13 +65,13 @@ class Settings
 			'name'=>'Категории',
 			'img'=>''
 			],
-	    'products'=>[
+	    /*'products'=>[
 			'name'=>'Тавари',
 			'img'=>''
 			],
         'filters'=>['name'=>'Фильтры'],
-        'settings'=>['name'=>'Настройки системы'],
-        'socials'=>[]
+        'settings'=>['name'=>'Настройки системы'],*/
+        /*'socials'=>[]*/
     ];
 	private $translate=[
 		'name' => ['Название', 'Не более 100 символов'],
