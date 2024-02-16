@@ -10,7 +10,7 @@ class FilesEdit
     public function addFile($directory=''): array
     {
         $directory=\trim($directory, ' /');
-        //$directory.='/';
+        $directory.='/';
         //$directory && !\preg_match('/\/$/', $directory) && $directory.='/';
         $this->setDirectory($directory);
         foreach ($_FILES as $key=>$file){

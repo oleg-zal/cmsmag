@@ -98,7 +98,7 @@ function createFile() {
                             location.reload();
                         }
                         catch (e) {
-                            elert('Произошла внутренняя ошибка');
+                            alert('Произошла внутренняя ошибка');
                         }
                     })
                 }

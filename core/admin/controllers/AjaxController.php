@@ -3,10 +3,11 @@
 namespace core\admin\controllers;
 
 use core\base\controllers\BaseAjax;
+use libraries\FilesEdit;
 
 class AjaxController extends BaseAdmin
 {
-    public function ajax(): string {
+    public function ajax() {
         if (isset($this->ajaxData['ajax'])) {
             $this->execBase();
             foreach ($this->ajaxData as $key => $item) {
@@ -26,6 +27,13 @@ class AjaxController extends BaseAdmin
                     break;
                 case 'search':
                     return $this->search();
+                    break;
+                case 'wyswyg_file':
+                    $dir = $this->clearStr($this->ajaxData['table']) . '/content_files/';
+                    $fileEdit = new FilesEdit();
+                    $fileEdit->setUniqueFile(false);
+                    $file = $fileEdit->addFile($dir);
+                    return ['success' => true, 'location' => PATH . UPLOAD_DIR . $file[key($file)]];
                     break;
             }
         }

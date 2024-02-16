@@ -21,7 +21,28 @@ function MCEInit(element, height=400) {
         file_picker_types: 'image',
         images_reuse_filename: true,
         images_upload_handler: function (file, success, fail) {
-
+            let formData = new FormData;
+            formData.append('file', file.blob(), file.blob().name);
+            formData.append('ajax', 'wyswyg_file');
+            formData.append('table', document.querySelector('input[name="table"]').value);
+            Ajax({
+                url: document.querySelector('#main-form').getAttribute('action'),
+                type: 'post',
+                data: formData,
+                processData: false,
+                contentType: false
+            }).then(res => {
+                return JSON.parse(res);
+            }).then(res => {
+                if (res.success) {
+                    success(res.location);
+                }
+                else {
+                    fail("Засада!!!");
+                }
+            }).catch((err) => {
+                console.log(err)
+            })
         },
         file_picker_callback: function (callback, value, meta) {
             let input = document.createElement('input')
