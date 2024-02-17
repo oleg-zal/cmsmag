@@ -160,6 +160,13 @@ class Model extends BaseModel
             $order = ($correctCurrentTable ? 'current_table DESC, ' : '') . '(' . implode('+', $order) . ')';
             $orderDirection = 'DESC';
         }
+        $result = $this->getUnion([
+            //'type' => 'all',
+            //'pagination' => [],
+            'order' =>  $order,
+            'order_direction'   =>  $orderDirection,
+        ]);
+        $a = 1;
     }
     protected function createWhereOrder($searchRows, $searchArr, $orederRows, $table) {
         $where = '';
