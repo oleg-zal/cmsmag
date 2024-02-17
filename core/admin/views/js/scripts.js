@@ -218,7 +218,10 @@ function showHideMenuSearch() {
         searchBtn.classList.add('vg-search-reverse');
         searchInput.focus();
     });
-    searchInput.addEventListener('blur', () => {
+    searchInput.addEventListener('blur', (e) => {
+        if (e.relatedTarget && e.relatedTarget.tagName === 'A') {
+            return;
+        }
         searchBtn.classList.remove('vg-search-reverse');
     })
 }
@@ -278,7 +281,7 @@ let searchResultHover = (() => {
             }
             children.forEach(item => item.classList.remove('search_act'));
             children[activeIndex].classList.add('search_act');
-            searchInput.value = children[activeIndex].innerText;
+            searchInput.value = children[activeIndex].innerText.replace(/\(.+?\)\s*$/, '');
         }
     }
     function setDefaultValue() {
@@ -313,7 +316,23 @@ function search() {
                         'ajax': 'search'
                     }
                 }).then(res => {
-                    console.log(res);
+                    try {
+                        result = JSON.parse(res);
+                        console.log(result);
+                        let resBlock = document.querySelector('.search_res');
+                        let counter = result.length < 20 ? result.length : 20;
+                        if (resBlock) {
+                            resBlock.innerHTML = '';
+                            for (let i=0; i<counter; i++) {
+                                resBlock.insertAdjacentHTML('beforeend',
+                                    `<a href="${result[i]['alias']}">${result[i]['name']}</a>`);
+                            }
+                            searchResultHover();
+                        }
+                    } catch (e) {
+                        console.log(e);
+                        alert('Ошибка в системе поиска в админ. панели');
+                    }
                 })
             }
         };

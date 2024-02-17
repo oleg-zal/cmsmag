@@ -122,11 +122,11 @@ class Model extends BaseModel
             $fields = [];
             $columns = $this->showColumns($table);
             $fields[] = $columns['id_row'] . ' as id';
-            $fieldName = isset($columns['name']) ? "CASE WHEN name <> '' THEN name " : "";
+            $fieldName = isset($columns['name']) ? "CASE WHEN {$table}.name <> '' THEN {$table}.name " : "";
             foreach ($columns as $col => $value) {
                 if ($col !== 'name' && stripos($col, 'name') !== false) {
                     if (!$fieldName) $fieldName = 'CASE ';
-                    $fieldName .= "WHEN $col <> '' THEN $col ";
+                    $fieldName .= "WHEN {$table}.$col <> '' THEN {$table}.$col ";
                 }
                 if (isset($value['Type']) &&
                     stripos($value['Type'], 'char') !== false || stripos($value['Type'], 'text') !== false) {
@@ -166,7 +166,18 @@ class Model extends BaseModel
             'order' =>  $order,
             'order_direction'   =>  $orderDirection,
         ]);
-        $a = 1;
+        if ($result) {
+            foreach ($result as $index => $item) {
+                $name = isset($projectTables[$item['table_name']]['name']) ?
+                    $projectTables[$item['table_name']]['name'] :
+                    $item['table_name'];
+                $result[$index]['name'] .= "({$name})";
+                $result[$index]['alias'] = PATH . Settings::get('routes')['admin']['alias'] .
+                    "/edit/{$item['table_name']}/{$item['id']}";
+
+            }
+        }
+        return $result ?: [];
     }
     protected function createWhereOrder($searchRows, $searchArr, $orederRows, $table) {
         $where = '';
@@ -185,7 +196,7 @@ class Model extends BaseModel
                             }
                         }
                         if (isset($columns[$row])) {
-                            $where .= "$row LIKE '%$item%' OR ";
+                            $where .= "{$table}.$row LIKE '%$item%' OR ";
                         }
                     }
                     $where = preg_replace('/\)?\s*or\s*\(?$/i', '', $where) . ') OR ';

@@ -53,7 +53,7 @@ abstract class BaseModelMethods
                 if($field || $field===null){
                     if($field===null){
                         $fields.="NULL,";
-                        //continue;
+                        continue;
                     }
                     if($join && $join_structure){
                         if(preg_match('/^(.+)?\s+as\s+(.+)/i', $field, $matches)){
