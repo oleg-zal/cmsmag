@@ -148,7 +148,11 @@ class Model extends BaseModel
                 $fields[] = "('current_table') AS current_table";
             }
             if ($where) {
-                //$this->buildUnion();
+                $this->buildUnion($table, [
+                    'fields' => $fields,
+                    'where' => $where,
+                    'no_concat' => true
+                ]);
             }
         }
         $orderDirection = '';
