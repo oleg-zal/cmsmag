@@ -25,14 +25,14 @@ class ShowController extends BaseAdmin
             return;
         }
         $fields[] = $this->columns['id_row'] . ' as id';
-        if ($this->columns['name']) $fields['name'] = 'name';
-        if ($this->columns['img']) $fields['img'] = 'img';
+        if ( !empty($this->columns['name']) ) $fields['name'] = 'name';
+        if ( !empty($this->columns['img'] )) $fields['img'] = 'img';
         if (count($fields) < 3) {
             foreach ($this->columns as $key => $item) {
-                if (!$fields['name'] && strpos($key, 'name') !==false) {
+                if (empty($fields['name']) && strpos($key, 'name') !==false) {
                     $fields['name'] = $key . ' as name';
                 }
-                if (!$fields['img'] && strpos($key, 'img') === 0) {
+                if (empty($fields['img']) && strpos($key, 'img') === 0) {
                     $fields['img'] = $key . ' as img';
                 }
             }

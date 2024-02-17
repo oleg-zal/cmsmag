@@ -158,8 +158,30 @@ class Model extends BaseModel
         }
     }
     protected function createWhereOrder($searchRows, $searchArr, $orederRows, $table) {
-        $where = [];
+        $where = '';
         $order = [];
+        if ($searchRows && $searchArr) {
+            $columns = $this->showColumns($table);
+            if ($columns) {
+                $where = '(';
+                foreach ($searchRows as $row) {
+                    $where .= '(';
+                    foreach ($searchArr as $item) {
+                        if (in_array($row, $orederRows)) {
+                            $str = "($row LIKE '%$item%')";
+                            if (!in_array($str, $order)) {
+                                $order[] = $str;
+                            }
+                        }
+                        if (isset($columns[$row])) {
+                            $where .= "$row LIKE '%$item%' OR ";
+                        }
+                    }
+                    $where = preg_replace('/\)?\s*or\s*\(?$/i', '', $where) . ') OR ';
+                }
+                $where && $where = preg_replace('/\s*or\s*$/i', '', $where) . ')';
+            }
+        }
         return compact('where', 'order');
     }
 }
