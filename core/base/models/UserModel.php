@@ -45,9 +45,10 @@ class UserModel extends BaseModel
             (
                 id int auto_increment primary key,
                 name varchar(255),
+                login varchar(255),
                 surname varchar(255) null,
                 age varchar(255),
-                pone varchar(255),
+                phone varchar(255),
                 email varchar(255),
                 password varchar(32),
                 credentials text null,
@@ -59,14 +60,15 @@ class UserModel extends BaseModel
                 exit('Ошибка создания таблици '.$this->userTable);
             }
             $this->add($this->userTable, [
-                'fields'=>['name'=>'admin', 'age'=>'05.10.1991', 'pone'=>'+79283895945',
-                    'email'=>'admin@mail.ru', 'password'=>md5('071172')]
+                'fields'=>['name'=>'admin', 'login' => 'admin', 'age'=>'05.10.1991', 'phone'=>'+79283895945',
+                    'email'=>'admin@mail.ru', 'password'=>md5('123')]
             ]);
         }
         if(!\in_array($this->blockedTable, $this->showTables())){
             $query='CREATE TABLE '. $this->blockedTable.'
             (
                 id int auto_increment primary key,
+                login varchar(255) null,
                 ip varchar(255) null,
                 email varchar(255) null,
                 trying tinyint(1) null,
@@ -75,7 +77,7 @@ class UserModel extends BaseModel
             charset=utf8
             ';
             if(!$this->query($query, 'u')){
-                exit('Ошибка создания таблици '.$this->userTable);
+                exit('Ошибка создания таблици '.$this->blockedTable);
             }
         }
 
