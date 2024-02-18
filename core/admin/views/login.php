@@ -46,7 +46,7 @@
 <body>
     <div>
         <?php if (!empty($_SESSION['res']['answer'])) {
-            echo "<p style=\"color: red\">{$_SESSION['res']['answer']}</p>";
+            echo "<p style=\"color: red; text-align: center\">{$_SESSION['res']['answer']}</p>";
             unset( $_SESSION['res']['answer'] );
         }?>
         <h1>Авторизация</h1>
@@ -56,6 +56,7 @@
             <label for="password">Password</label>
             <input type="password" name="password" id="password">
             <input type="submit" value="login">
+            <input type="hidden" name="token" id="token" value="">
         </form>
     </div>
     <script src="<?=PATH . ADMIN_TEMPLATE?>js/frameworkfunctions.js"></script>
@@ -69,7 +70,7 @@
                         data: {ajax: 'token'}
                     }).then(res => {
                         if (res) {
-                            form.insertAdjacentHTML('beforeend', `<input type="hidden" name="token" value="${res}"`)
+                            form.querySelector('input[name=token]').value =res;
                         }
                         form.submit()
                     })

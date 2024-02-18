@@ -19,22 +19,23 @@ class LoginController extends BaseController
             $this->model->logout();
             $this->redirect(PATH);
         }
-        $timeClean = (new \DateTime())->modify('-' . BLOCK_TIME . ' hour')->format('Y-m-d H:i:s');
-        $this->model->delete($this->model->getBlockedTable(), [
-            'where' => ['time' => $timeClean],
-            'operand' => ['<']
-        ]);
+
         if ($this->isPost()) {
             if (empty($_POST['token']) || $_POST['token'] !== $_SESSION['token']) {
                 exit('КУКУ ОХИБКА');
             }
+            $timeClean = (new \DateTime())->modify('-' . BLOCK_TIME . ' hour')->format('Y-m-d H:i:s');
+            $this->model->delete($this->model->getBlockedTable(), [
+                'where' => ['time' => $timeClean],
+                'operand' => ['<']
+            ]);
             $ipUser = filter_var(@$_SERVER['HTTP_CLIENT_IP'], FILTER_VALIDATE_IP) ?:
                 filter_var(@$_SERVER['HTTP_X_FORWARDED_FOR'], FILTER_VALIDATE_IP) ?:
                     @$_SERVER['REMOTE_ADDR'];
-            $trying = $this->model->delete($this->model->getBlockedTable(), [
+            $trying = $this->model->get($this->model->getBlockedTable(), [
                 'fields' => ['trying'],
                 'where' => ['ip' => $ipUser]
-            ]);
+            ])[0]['trying'];
             $trying = !empty($trying) ? $this->clearNum($trying) : 0;
             $success = 0;
             if ( !empty($_POST['login']) && !empty($_POST['password']) && $trying < 3) {
@@ -49,9 +50,9 @@ class LoginController extends BaseController
                     $where = [];
                     if ($trying) {
                         $method = 'edit';
-                        $where['id'] = $ipUser;
+                        $where['ip'] = $ipUser;
                     }
-                    $this->model->$method($this->model->getAdminTable(), [
+                    $this->model->$method($this->model->getBlockedTable(), [
                         'fields' => ['login' => $login, 'ip' => $ipUser, 'time' => 'NOW()', 'trying' => ++$trying],
                         'where' => $where
                     ]);
@@ -69,13 +70,14 @@ class LoginController extends BaseController
 
             }
             elseif ($trying >= 3) {
+                $this->model->logout();
                 $error = 'Превышено максимальное количество ввода попыток пароля - ' . $ipUser;
             }
             else {
                 $error = 'Заполните обязательные поля';
             }
             $_SESSION['res']['answer'] = $success ?
-                "<div class=\"success\">Добро пожаловать {$userData['name']}</div>" :
+                "<div class=\"success\">Добро пожаловать {$userData[0]['name']}</div>" :
                 preg_split('/\s*\-/', $error, 2, PREG_SPLIT_NO_EMPTY)[0];
             $this->writeLog($error, 'user_log.txt', 'ACCESS USER');
             $path = null;

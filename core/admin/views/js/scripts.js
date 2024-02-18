@@ -358,3 +358,11 @@ if (galleries.length) {
     })
 }
 /*document.querySelector('.vg-rows > div').sortable();*/
+document.addEventListener('DOMContentLoaded', () => {
+    function hideMessage() {
+        document.querySelectorAll('.success, .error').forEach(item => item.remove());
+        //
+        document.removeEventListener('click', hideMessage);
+    }
+    document.addEventListener('click', hideMessage);
+})
