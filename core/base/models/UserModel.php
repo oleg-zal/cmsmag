@@ -121,7 +121,7 @@ class UserModel extends BaseModel
      */
     private function package(): string
     {
-        if(isset($this->userData['id']) && !empty($this->userData['id'])){
+        if(!empty($this->userData['id'])){
             $data['id']=$this->userData['id'];
             $data['version']=\COOKIE_VERSION;
             $data['cookieTime']=date('Y-m-d H:i:s');
@@ -169,7 +169,7 @@ class UserModel extends BaseModel
         }
         if(!empty(\COOKIE_TIME)){
             if((new \DateTime())>(new \DateTime($data['cookieTime']))->modify(\COOKIE_TIME.' minutes')){
-                throw new AuthException('Привишена бремя бездействи пользователя');
+                throw new AuthException('Превышена время бездействи пользователя');
             }
         }
     }
