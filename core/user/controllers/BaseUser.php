@@ -109,6 +109,7 @@ abstract class BaseUser extends BaseController
         if(\preg_match('/^\s*https?:\/\//i', $alias)){
             return $alias.$str;
         }
+        // Вычистить двойные слеши
         return \preg_replace('/\/{2,}/', '/', \PATH.$alias.\END_SLASH.$str);
 
     }
