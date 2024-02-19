@@ -22,39 +22,42 @@
             <div class="header__topbar">
                 <div class="header__contacts">
                     <div><a href="mailto: <?=$this->set['email']?>"><?=$this->set['email']?></a></div>
-                    <div><a href="tel: +<?=preg_replace('/[^\+\d]/', '', $this->set['phone'])?>">+<?=$this->set['phone']?></a></div>
+                    <div>
+                        <a href="tel: +<?=preg_replace('/[^\+\d]/', '', $this->set['phone'])?>">
+                            +<?=$this->set['phone']?>
+                        </a>
+                    </div>
                     <div><a class="js-callback">Связаться с нами</a></div>
                 </div>
                 <nav class="header__nav">
                     <ul class="header__nav-list">
                         <?php if(!empty($this->menu['catalog'])): ?>
-                        <li class="header__nav-parent">
-                            <a href="<?=$this->alias('catalog')?>"><span>Каталог</span></a>
-                            <ul class="header__nav-sublist">
-                                <?php foreach ($this->menu['catalog'] as $value):?>
-                                <li>
-                                    <a href="<?=$this->alias(['catalog'=>$value['alias']])?>"><span><?=$value['name']?></span></a>
-                                </li>
-                                <?php endforeach;?>
-                            </ul>
-                        </li>
-                        <?php endif;?>
-
-                        <?php if(!empty($this->menu['information'])): ?>
                             <li class="header__nav-parent">
-                            <a href="<?=$this->alias('catalog')?>"><span>Акции и скидки</span></a>
-                            <ul class="header__nav-sublist">
-                                <?php foreach ($this->menu['information'] as $value):?>
+                                <a href="<?=$this->alias('catalog')?>"><span>Каталог</span></a>
+                                <ul class="header__nav-sublist">
+                                    <?php foreach ($this->menu['catalog'] as $value):?>
                                     <li>
-                                        <a href="<?=$this->alias(['information'=>$value['alias']])?>"><span><?=$value['name']?></span></a>
+                                        <a href="<?=$this->alias(['catalog'=>$value['alias']])?>">
+                                            <span><?=$value['name']?></span>
+                                        </a>
                                     </li>
-                                <?php endforeach;?>
-                            </ul>
+                                    <?php endforeach;?>
+                                </ul>
                             </li>
                         <?php endif;?>
 
+                        <?php if(!empty($this->menu['information'])): ?>
+                            <?php foreach($this->menu['information'] as $item):?>
+                                <li class="">
+                                    <a href="<?=$this->alias(['information' => $item['alias']])?>">
+                                        <span><?=$item['name']?></span>
+                                    </a>
+                                </li>
+                            <?php endforeach;?>
+                        <?php endif;?>
+
                         <li class="">
-                            <a href="<?=$this->alias('new')?>"><span>Новости</span></a>
+                            <a href="<?=$this->alias('news')?>"><span>Новости</span></a>
                             <ul class="header__nav-sublist">
 
                             </ul>

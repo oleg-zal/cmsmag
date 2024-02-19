@@ -26,18 +26,18 @@ abstract class BaseUser extends BaseController
         ]);
         $this->set && $this->set=$this->set[0];
         $this->menu['catalog']=$this->model->get('category', [
-            //'where'=>['visible'=>1],
-            //'order'=>['menu_position']
+            'where'=>['visible'=>1, 'parent_id' => null],
+            'order'=>['menu_position']
         ]);
         $this->menu['information']=$this->model->get('information', [
-            //'where'=>['visible'=>1, 'top_menu'=>1],
-            //'order'=>['menu_position']
+            'where'=>['visible'=> 1, 'show_top_menu'=>1],
+            'order'=>['menu_position']
         ]);
-        $this->socials=$this->model->get('socials', [
+        /*$this->socials=$this->model->get('socials', [
             'where'=>['visible'=>1],
             'order'=>['menu_position']
 
-        ]);
+        ]);*/
     }
 
     /**

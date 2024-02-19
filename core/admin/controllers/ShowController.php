@@ -10,7 +10,7 @@ class ShowController extends BaseAdmin
     protected function inputData() {
         if (!$this->userId) $this->execBase();
         $this->createTableData();
-        $this->createData(['fields' => ['content', 'menu_position']]);
+        $this->createData(['fields' => []]);
         //print_arr($this->data);
         return $this->expansion(get_defined_vars());
     }

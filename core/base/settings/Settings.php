@@ -39,9 +39,9 @@ class Settings
     ];
     private $formTemplate=PATH.'core/admin/views/include/form_templates/';
     private $templateArr=[
-        'text'=>['name'],
-        'textarea'=>['content', 'keywords'],
-        'radio' => ['visible'],
+        'text'=>['name', 'phone', 'email', 'alias'],
+        'textarea'=>['keyword','content', 'address', 'description'],
+        'radio' => ['visible', 'show_top_menu'],
         'checkboxlist' => ['filters'],
         'select' => ['menu_position', 'parent_id'],
         'img' => ['img', 'main_img'],
@@ -58,25 +58,27 @@ class Settings
         'img','gallery_img'
     ];
     private $projectTables=[
+        'category' => ['name' => 'Каталог'],
         'articles' => ['name' => 'Статьи'],
-        'pages' => ['name' => 'Страницы'],
-        'goods'=>['name'=>'Товары'],
-		'category'=>[
-			'name'=>'Категории',
-			'img'=>''
-			],
-	    /*'products'=>[
-			'name'=>'Тавари',
-			'img'=>''
-			],
+        'goods'=>['name'=>'Товары', 'img' => 'pages.png'],
         'filters'=>['name'=>'Фильтры'],
-        'settings'=>['name'=>'Настройки системы'],*/
-        /*'socials'=>[]*/
+        'information' => ['name'=>'Информация'],
+        'settings'=>['name'=>'Настройки системы'],
+        /*'category'=>[ 'name'=>'Категории', 'img'=>''],
+        'products'=>['name'=>'Тавари', 'img'=>''],
+        'pages' => ['name' => 'Страницы'],
+        'socials'=>[]*/
     ];
 	private $translate=[
-		'name' => ['Название', 'Не более 100 символов'],
-        'keywords'=>['Ключевые слова', 'Не более 70 символов'],
-        'content'=>['Содержание', 'Не более 500 символов'],
+		'name' => ['Название', 'Не более 255 символов'],
+        'keywords'=>['Ключевые слова', 'Не более 400 символов'],
+        'content'=>['Описание', 'Не более 400 символов'],
+        'description'=>['SEO Описание', 'Не более 400 символов'],
+        'phone' => ['Телефон'],
+        'email' => ['E-mail'],
+        'address' => ['Адрес'],
+        'alias' => ['Ссылка ЧПУ'],
+        'show_top_menu' => ['Показывать в верхнем меню'],
         'img'=>['Картинка', 'jpg, png'],
         'gallery_img'=>['Галерея'],
         'visible'=>[],
@@ -95,14 +97,14 @@ class Settings
 	];
 	private $rootItems=[
 		'name'=>'Корневая',
-        'tables' => ['goods', 'filters', 'articles', 'pages']
+        'tables' => ['goods', 'filters', 'articles', 'pages', 'category']
 		//'tables'=>['category', 'articles', 'products', 'page', 'goods', 'filters','socials']
 	];
     private $defaultTable='articles';
     private $expansion='core/admin/expansion/';
 	private $radio=[
 		'visible'=>['Нет','Да', 'default'=>'Да'],
-        'top_menu'=>['Нет','Да', 'default'=>'Да'],
+        'show_top_menu'=>['Нет','Да', 'default'=>'Да'],
 	];
     private $validation=[
         'name'=>['empty'=>true, 'trim'=>true, 'len'=>5],
