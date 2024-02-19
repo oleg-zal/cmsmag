@@ -22,7 +22,7 @@
             <div class="header__topbar">
                 <div class="header__contacts">
                     <div><a href="mailto: <?=$this->set['email']?>"><?=$this->set['email']?></a></div>
-                    <div><a href="tel: +<?=preg_replace('/[^\+\d]/', '', $this->set['pone'])?>">+<?=$this->set['pone']?></a></div>
+                    <div><a href="tel: +<?=preg_replace('/[^\+\d]/', '', $this->set['phone'])?>">+<?=$this->set['phone']?></a></div>
                     <div><a class="js-callback">Связаться с нами</a></div>
                 </div>
                 <nav class="header__nav">

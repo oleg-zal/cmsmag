@@ -105,7 +105,11 @@ trait BaseMethods
     }
     protected function getController(){
         return $this->controller ?:
-            $this->controller=\preg_split('/_?controller/', \strtolower(\preg_replace('/([^A-Z])([A-Z])/', '$1_$2',
-                (new \ReflectionClass($this))->getShortName())), 0, \PREG_SPLIT_NO_EMPTY)[0];
+            $this->controller=\preg_split(
+                '/_?controller/',
+                \strtolower(\preg_replace('/([^A-Z])([A-Z])/', '$1_$2',
+                (new \ReflectionClass($this))->getShortName())),
+                0,
+                \PREG_SPLIT_NO_EMPTY)[0];
     }
 }
