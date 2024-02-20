@@ -33,11 +33,11 @@ abstract class BaseUser extends BaseController
             'where'=>['visible'=> 1, 'show_top_menu'=>1],
             'order'=>['menu_position']
         ]);
-        /*$this->socials=$this->model->get('socials', [
+        $this->socials=$this->model->get('socials', [
             'where'=>['visible'=>1],
             'order'=>['menu_position']
 
-        ]);*/
+        ]);
     }
 
     /**

@@ -39,7 +39,7 @@ class Settings
     ];
     private $formTemplate=PATH.'core/admin/views/include/form_templates/';
     private $templateArr=[
-        'text'=>['name', 'phone', 'email', 'alias'],
+        'text'=>['name', 'phone', 'email', 'alias', 'external_alias'],
         'textarea'=>['keyword','content', 'address', 'description'],
         'radio' => ['visible', 'show_top_menu'],
         'checkboxlist' => ['filters'],
@@ -63,6 +63,7 @@ class Settings
         'goods'=>['name'=>'Товары', 'img' => 'pages.png'],
         'filters'=>['name'=>'Фильтры'],
         'information' => ['name'=>'Информация'],
+        'socials' => ['name' => 'Социальные сети'],
         'settings'=>['name'=>'Настройки системы'],
         /*'category'=>[ 'name'=>'Категории', 'img'=>''],
         'products'=>['name'=>'Тавари', 'img'=>''],
@@ -79,6 +80,7 @@ class Settings
         'address' => ['Адрес'],
         'alias' => ['Ссылка ЧПУ'],
         'show_top_menu' => ['Показывать в верхнем меню'],
+        'external_alias' => ['Внешняя ссылка'],
         'img'=>['Картинка', 'jpg, png'],
         'gallery_img'=>['Галерея'],
         'visible'=>[],
