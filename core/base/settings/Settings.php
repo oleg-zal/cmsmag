@@ -39,12 +39,12 @@ class Settings
     ];
     private $formTemplate=PATH.'core/admin/views/include/form_templates/';
     private $templateArr=[
-        'text'=>['name', 'phone', 'email', 'alias', 'external_alias'],
-        'textarea'=>['keyword','content', 'address', 'description'],
+        'text'=>['name', 'phone', 'email', 'alias', 'external_alias', 'sub_title', 'number_of_years'],
+        'textarea'=>['keyword','content', 'address', 'description', 'shot_content'],
         'radio' => ['visible', 'show_top_menu'],
         'checkboxlist' => ['filters'],
         'select' => ['menu_position', 'parent_id'],
-        'img' => ['img', 'main_img'],
+        'img' => ['img', 'main_img', 'img_years'],
         'gallery_img' => ['gallery_img', 'new_gallery_img']
         /*'text'=>['name', 'phone', 'email','alias','external_alias'],*/
         /*'textarea'=>['content', 'keywords'],
@@ -59,9 +59,10 @@ class Settings
     ];
     private $projectTables=[
         'category' => ['name' => 'Каталог'],
-        'articles' => ['name' => 'Статьи'],
         'goods'=>['name'=>'Товары', 'img' => 'pages.png'],
         'filters'=>['name'=>'Фильтры'],
+        'articles' => ['name' => 'Статьи'],
+        'sales' => ['name' => 'Акции'],
         'information' => ['name'=>'Информация'],
         'socials' => ['name' => 'Социальные сети'],
         'settings'=>['name'=>'Настройки системы'],
@@ -81,6 +82,10 @@ class Settings
         'alias' => ['Ссылка ЧПУ'],
         'show_top_menu' => ['Показывать в верхнем меню'],
         'external_alias' => ['Внешняя ссылка'],
+        'sub_title' => ['Подзаголовок'],
+        'shot_content' => ['Краткое описание'],
+        'img_years' => ['Изображение количества лет на рынке'],
+        'number_of_years' => ['Количество лет на рынке'],
         'img'=>['Картинка', 'jpg, png'],
         'gallery_img'=>['Галерея'],
         'visible'=>[],
@@ -94,7 +99,7 @@ class Settings
     ];
 	private $blockNeedle=[
 		'vg-rows'=>[],
-		'vg-img'=>['img', 'main_img'],
+		'vg-img'=>['img', 'main_img', 'img_years', 'number_of_years'],
 		'vg-content'=>['content']
 	];
 	private $rootItems=[

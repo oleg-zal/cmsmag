@@ -10,6 +10,11 @@ class IndexController extends BaseUser
      */
     protected function inputData(){
         parent::inputData();
+        $sales = $this->model->get('sales', [
+            'where' => ['visible' => 1],
+            'order' => ['menu_position']
+        ]);
+        return compact('sales');
     }
     protected function testRequest() {
         $model = Model::instance();

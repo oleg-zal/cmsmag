@@ -491,7 +491,9 @@ textarea {
     display: block;
     height: 300px;
 }
-
+.img_show img {
+    width: 50px;
+}
 .mce-tinymce.mce-container.mce-panel, .tox-tinymce {
     width: 100%;
     max-width: 98vw;

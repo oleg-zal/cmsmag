@@ -1,89 +1,59 @@
+<?php if (!empty($sales)): ?>
+    <section class="slider">
+        <div class="slider__container swiper-container">
+            <div class="slider__wrapper swiper-wrapper">
+                <?php foreach ($sales as $item):?>
 
+                    <a href="<?=$this->alias($item['external_alias'])?>" class="slider__item swiper-slide" style="text-decoration: none">
+                            <div class="slider__item-description">
+                                <div class="slider__item-prev-text"><?=$item['sub_title']?></div>
+                                <div class="slider__item-header">
+                                    <?php foreach (preg_split('/\s+/', $item['name'], 0, PREG_SPLIT_NO_EMPTY) as $value):?>
+                                        <span><?=$value?></span>
+                                    <?php endforeach;?>
+                                    <div class="slider__item-text">
+                                        <?=$this->clearStr($item['shot_content']);?>
+                                    </div>
+                                </div>
+                                <div class="slider__item-logos">
+                                    <?php if (!empty($this->set['img_years'] && !empty($this->set['number_of_years']))) :?>
+                                    <div class="slider__item-15yrs">
+                                        <img src="<?=$this->img( $this->set['img_years']  );?>" alt="">
+                                        <p><span><?=$this->wordsForCounter( $this->set['number_of_years'] )?></span>на рынке</p>
+                                    </div>
+                                    <?php endif;?>
+                                </div>
+                            </div>
+                            <div class="slider__item-image">
+                                <img src="<?=$this->img($item['img'])?>" alt="">
+                            </div>
+                        </a>
 
-<section class="slider">
-    <div class="slider__container swiper-container">
-
-        <div class="slider__wrapper swiper-wrapper">
-            <div class="slider__item swiper-slide">
-                <div class="slider__item-description">
-                    <div class="slider__item-prev-text">Продажа</div>
-                    <div class="slider__item-header"><span>Интернет-магазин</span>
-                        <span>Автозапчастей</span></div>
-                    <div class="slider__item-text">
-                        Lorem ipsum dolor, sit amet consectetur adipisicing, elit. Ut quisquam eos rem quod ratione. Quam odit dolor, aperiam labore neque quis adipisci dicta non, rem recusandae tempore quia id quas voluptates ea vel atque doloribus explicabo maxime velit harum, accusantium.
-                    </div>
-                    <div class="slider__item-logos">
-                        <div class="slider__item-15yrs">
-                            <img src="<?=PATH . TEMPLATE?>assets/img/slider/15.svg" alt="">
-                            <p><span>Лет</span>на рынке</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="slider__item-image">
-                    <img src="<?=PATH . TEMPLATE?>assets/img/slider/slide1.png" alt="">
-                </div>
+                <?php endforeach;?>
             </div>
 
-            <div class="slider__item swiper-slide">
-                <div class="slider__item-description">
-                    <div class="slider__item-prev-text">Продажа</div>
-                    <div class="slider__item-header"><span>Интернет-магазин</span>
-                        <span>Автозапчастей</span></div>
-                    <div class="slider__item-text">
-                        Lorem ipsum dolor, sit amet consectetur adipisicing, elit. Ut quisquam eos rem quod ratione. Quam odit dolor, aperiam labore neque quis adipisci dicta non, rem recusandae tempore quia id quas voluptates ea vel atque doloribus explicabo maxime velit harum, accusantium.
-                    </div>
-                    <div class="slider__item-logos">
-                        <div class="slider__item-15yrs">
-                            <img src="<?=PATH . TEMPLATE?>assets/img/slider/15.svg" alt="">
-                            <p><span>Лет</span>на рынке</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="slider__item-image">
-                    <img src="<?=PATH . TEMPLATE?>assets/img/slider/slide1.png" alt="">
-                </div>
+            <div class="slider__pagination swiper-pagination"></div>
+            <div class="slider__controls controls _prev swiper-button-prev">
+                <svg>
+                    <use xlink:href="<?=PATH . TEMPLATE?>assets/img/icons.svg#arrow"></use>
+                </svg>
             </div>
-
-            <div class="slider__item swiper-slide">
-                <div class="slider__item-description">
-                    <div class="slider__item-prev-text">Продажа</div>
-                    <div class="slider__item-header"><span>Интернет-магазин</span>
-                        <span>Автозапчастей</span></div>
-                    <div class="slider__item-text">
-                        Lorem ipsum dolor, sit amet consectetur adipisicing, elit. Ut quisquam eos rem quod ratione. Quam odit dolor, aperiam labore neque quis adipisci dicta non, rem recusandae tempore quia id quas voluptates ea vel atque doloribus explicabo maxime velit harum, accusantium.
-                    </div>
-                    <div class="slider__item-logos">
-                        <div class="slider__item-15yrs">
-                            <img src="<?=PATH . TEMPLATE?>assets/img/slider/15.svg" alt="">
-                            <p><span>Лет</span>на рынке</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="slider__item-image">
-                    <img src="<?=PATH . TEMPLATE?>assets/img/slider/slide1.png" alt="">
-                </div>
+            <div class="slider__controls controls _next swiper-button-next">
+                <svg>
+                    <use xlink:href="<?=PATH . TEMPLATE?>assets/img/icons.svg#arrow"></use>
+                </svg>
             </div>
-        </div>
+    </section>
+<?php endif; ?>
 
-        <div class="slider__pagination swiper-pagination"></div>
-        <div class="slider__controls controls _prev swiper-button-prev">
-            <svg>
-                <use xlink:href="<?=PATH . TEMPLATE?>assets/img/icons.svg#arrow"></use>
-            </svg>
-        </div>
-        <div class="slider__controls controls _next swiper-button-next">
-            <svg>
-                <use xlink:href="<?=PATH . TEMPLATE?>assets/img/icons.svg#arrow"></use>
-            </svg>
-        </div>
-</section>
-
+<?php if(!empty($this->menu['catalog'])): ?>
 <section class="catalog">
     <div class="division-internal__items">
 
-        <a href="division-internal.html#" class="division-internal-item">
+        <?php foreach ($this->menu['catalog'] as $item):?>
+        <a href="<?=$this->alias(['catalog' => $item['alias']]) ?>" class="division-internal-item">
           <span class="division-internal-item__title">
-            Запчасти
+            <?=$item['name']?>
           </span>
             <span class="division-internal-item__arrow-stat">
             <svg>
@@ -94,79 +64,10 @@
             <img src="<?=PATH . TEMPLATE?>assets/img/divisions/devision-arrow.png" alt="">
           </span>
         </a>
-
-        <a href="division-internal.html#" class="division-internal-item">
-          <span class="division-internal-item__title">
-            Аккумуляторы и принадлежности
-          </span>
-            <span class="division-internal-item__arrow-stat">
-            <svg>
-              <use xlink:href="<?=PATH . TEMPLATE?>assets/img/icons.svg#arrow-right"></use>
-            </svg>
-          </span>
-            <span class="division-internal-item__arrow">
-            <img src="<?=PATH . TEMPLATE?>assets/img/divisions/devision-arrow.png" alt="">
-          </span>
-        </a>
-
-        <a href="division-internal.html#" class="division-internal-item">
-          <span class="division-internal-item__title">
-            Автокосметика и автохимия
-          </span>
-            <span class="division-internal-item__arrow-stat">
-            <svg>
-              <use xlink:href="<?=PATH . TEMPLATE?>assets/img/icons.svg#arrow-right"></use>
-            </svg>
-          </span>
-            <span class="division-internal-item__arrow">
-            <img src="<?=PATH . TEMPLATE?>assets/img/divisions/devision-arrow.png" alt="">
-          </span>
-        </a>
-
-        <a href="division-internal.html#" class="division-internal-item">
-          <span class="division-internal-item__title">
-            Масла
-          </span>
-            <span class="division-internal-item__arrow-stat">
-            <svg>
-              <use xlink:href="<?=PATH . TEMPLATE?>assets/img/icons.svg#arrow-right"></use>
-            </svg>
-          </span>
-            <span class="division-internal-item__arrow">
-            <img src="<?=PATH . TEMPLATE?>assets/img/divisions/devision-arrow.png" alt="">
-          </span>
-        </a>
-
-        <a href="division-internal.html#" class="division-internal-item">
-          <span class="division-internal-item__title">
-            Автолампы
-          </span>
-            <span class="division-internal-item__arrow-stat">
-            <svg>
-              <use xlink:href="<?=PATH . TEMPLATE?>assets/img/icons.svg#arrow-right"></use>
-            </svg>
-          </span>
-            <span class="division-internal-item__arrow">
-            <img src="<?=PATH . TEMPLATE?>assets/img/divisions/devision-arrow.png" alt="">
-          </span>
-        </a>
-
-        <a href="division-internal.html#" class="division-internal-item">
-          <span class="division-internal-item__title">
-            Аксессуары
-          </span>
-            <span class="division-internal-item__arrow-stat">
-            <svg>
-              <use xlink:href="<?=PATH . TEMPLATE?>assets/img/icons.svg#arrow-right"></use>
-            </svg>
-          </span>
-            <span class="division-internal-item__arrow">
-            <img src="<?=PATH . TEMPLATE?>assets/img/divisions/devision-arrow.png" alt="">
-          </span>
-        </a>
-
+        <?php endforeach;?>
     </div>
 </section>
+<?php endif; ?>
 
 <section class="offers">
     <div class="offers__tabs">

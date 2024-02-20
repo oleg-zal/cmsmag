@@ -113,4 +113,31 @@ abstract class BaseUser extends BaseController
         return \preg_replace('/\/{2,}/', '/', \PATH.$alias.\END_SLASH.$str);
 
     }
+    protected function wordsForCounter($counter, $arrElement = 'years') {
+        $arr = [
+            'years' => [
+                'лет',
+                'год',
+                'года',
+            ]
+        ];
+        if (is_array($arrElement)) {
+            $arr = $arrElement;
+        }
+        else {
+            $arr = $arr[$arrElement] ?? array_shift($arr);
+        }
+        if (!$arr) return null;
+        $char = (int) substr($counter, -1);
+        $counter = (int) substr($counter, -2);
+        if ( ($counter >= 10 && $counter <=20) || ($char >=5 && $char <=9) || !$char) {
+            return $arr[0] ?? null;
+        }
+        elseif ($char === 1) {
+            return $arr[1] ?? null;
+        }
+        else {
+            return $arr[2] ?? null;
+        }
+    }
 }
