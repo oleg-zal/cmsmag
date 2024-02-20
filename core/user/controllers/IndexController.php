@@ -14,6 +14,7 @@ class IndexController extends BaseUser
             'where' => ['visible' => 1],
             'order' => ['menu_position']
         ]);
+        $goods = $this->model->getGoods(['where' => ['parent_id' => null]]);
         return compact('sales');
     }
     protected function testRequest() {
