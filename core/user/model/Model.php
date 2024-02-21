@@ -74,9 +74,62 @@ class Model extends BaseModel
                         ]
                     ]
                 ]);
+                if ($goodsColumns['discount']) {
+                    foreach ($goods as $key => $item) {
+                        $this->applyDiscount($goods[$key], $item['discount']);
+                    }
+                }
+                if ($filters) {
+                    $filterIds = implode(',', array_unique(array_column($filters, 'id')) );
+                    $goodIds = implode(',', array_unique(array_column($filters, 'goods_id')) );
+                    $query = "SELECT `filters_id` as id, COUNT(goods_id) as count FROM goods_filters
+                                    where filters_id IN ($filterIds) AND goods_id IN ($goodIds) GROUP by filters_id";
+                    $goodsCountDB = $this->query($query);
+                    $goodsCount = [];
+                    if ($goodsCountDB) {
+                        foreach ($goodsCountDB as $item) {
+                            $goodsCount[$item['id']] = $item;
+                        }
+                    }
+                    $catalogFilters = [];
+                    foreach ($filters as $item) {
+                        $parent = [];
+                        $child = [];
+                        foreach ($item as $row => $rowValue) {
+                            if (strpos($row, 'f_') === 0 ) {
+                                $name = preg_replace('/^f_/', '', $row);
+                                $parent[$name] = $rowValue;
+                            }
+                            else {
+                                $child['name'] = $rowValue;
+                            }
+                        }
+                        if ( isset( $goodsCount[$child['id']]['count'] ) ) {
+                            $child['count'] = $goodsCount[$child['id']]['count'];
+                        }
+                        if ( empty( $catalogFilters[$parent['id']] )) {
+                            $catalogFilters[$parent['id']] = $parent;
+                            $catalogFilters[$parent['id']]['values'] = [];
+                        }
+                        $catalogFilters[$parent['id']]['values'][$child['id']] = $child;
+                        if ( isset( $goods[$item['goods_id']] ) ) {
+                            if ( empty( $goods[$item['goods_id']]['filters'][$parent['id']] )) {
+                                $goods[$item['goods_id']]['filters'][$parent['id']] = $parent;
+                                $goods[$item['goods_id']]['filters'][$parent['id']]['values'] = [];
+                            }
+                            $goods[$item['goods_id']]['filters'][$parent['id']]['values'][$item['id']] = $child;
+                        }
+                    }
+                }
             }
         }
-        $a = 1;
-
+        return $goods ?? null;
+    }
+    public function applyDiscount(&$data, $discount) {
+        if ($discount) {
+            $data['old_price'] = $data['price'];
+            $data['discount'] = $discount;
+            $data['price'] = $data['old_price'] - $data['old_price'] / 100 * $discount;
+        }
     }
 }

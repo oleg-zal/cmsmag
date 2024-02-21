@@ -14,7 +14,14 @@ class IndexController extends BaseUser
             'where' => ['visible' => 1],
             'order' => ['menu_position']
         ]);
-        $goods = $this->model->getGoods(['where' => ['parent_id' => null]]);
+        $arrHits = ['hit', 'sale', 'new', 'hot'];
+        $goods = [];
+        foreach ($arrHits as $type) {
+            $goods[$type] = $this->model->getGoods([
+                'where' => [$type => 1],
+                'limit' => 6
+            ]);
+        }
         return compact('sales');
     }
     protected function testRequest() {

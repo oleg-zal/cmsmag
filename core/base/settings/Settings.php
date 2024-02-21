@@ -39,9 +39,9 @@ class Settings
     ];
     private $formTemplate=PATH.'core/admin/views/include/form_templates/';
     private $templateArr=[
-        'text'=>['name', 'phone', 'email', 'alias', 'external_alias', 'sub_title', 'number_of_years'],
+        'text'=>['name', 'phone', 'email', 'alias', 'external_alias', 'sub_title', 'number_of_years', 'price', 'discount'],
         'textarea'=>['keyword','content', 'address', 'description', 'shot_content'],
-        'radio' => ['visible', 'show_top_menu'],
+        'radio' => ['visible', 'show_top_menu', 'hit', 'sale', 'new', 'hot'],
         'checkboxlist' => ['filters'],
         'select' => ['menu_position', 'parent_id'],
         'img' => ['img', 'main_img', 'img_years'],
@@ -86,6 +86,12 @@ class Settings
         'shot_content' => ['Краткое описание'],
         'img_years' => ['Изображение количества лет на рынке'],
         'number_of_years' => ['Количество лет на рынке'],
+        'hit'   =>  ['хит продаж'],
+        'sale'  =>  ['Акция'],
+        'new'   =>  ['Новинка'],
+        'hot'   =>  ['Горячее предложение'],
+        'discount' => ['Скидка'],
+        'price' => ['Цена'],
         'img'=>['Картинка', 'jpg, png'],
         'gallery_img'=>['Галерея'],
         'visible'=>[],
@@ -112,16 +118,20 @@ class Settings
 	private $radio=[
 		'visible'=>['Нет','Да', 'default'=>'Да'],
         'show_top_menu'=>['Нет','Да', 'default'=>'Да'],
+        'hit'   =>  ['Нет','Да', 'default'=>'Нет'],
+        'sale'  =>  ['Нет','Да', 'default'=>'Нет'],
+        'new'   =>  ['Нет','Да', 'default'=>'Нет'],
+        'hot'   =>  ['Нет','Да', 'default'=>'Нет'],
 	];
     private $validation=[
-        'name'=>['empty'=>true, 'trim'=>true, 'len'=>5],
+        'name'=>['empty'=>true, 'trim'=>true],
+        'price'=>['int'=>true],
+        'discount'=>['int'=>true],
+        'login' => ['empty'=>true, 'trim'=>true],
         'email'=>['empty'=>true, 'trim'=>true],
         'password'=>['crypt'=>true, 'empty'=>true, 'trim'=>true, 'len'=>8],
-        'price'=>['int'=>true],
         'keywords'=>['count' => 70, 'trim'=>true],
-        'content'=>['trim'=>true, ],
         'description'=>['count'=>160, 'trim'=>true],
-        'login' => ['empty'=>true, 'trim'=>true],
     ];
     private $messages='core/base/messages/';
     static public function get($property){
