@@ -492,7 +492,7 @@ textarea {
     height: 300px;
 }
 .img_show img {
-    width: 50px;
+    width: 100%;
 }
 .mce-tinymce.mce-container.mce-panel, .tox-tinymce {
     width: 100%;

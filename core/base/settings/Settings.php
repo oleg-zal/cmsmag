@@ -44,7 +44,7 @@ class Settings
         'radio' => ['visible', 'show_top_menu', 'hit', 'sale', 'new', 'hot'],
         'checkboxlist' => ['filters'],
         'select' => ['menu_position', 'parent_id'],
-        'img' => ['img', 'main_img', 'img_years'],
+        'img' => ['img', 'main_img', 'img_years', 'promo_img'],
         'gallery_img' => ['gallery_img', 'new_gallery_img']
         /*'text'=>['name', 'phone', 'email','alias','external_alias'],*/
         /*'textarea'=>['content', 'keywords'],
@@ -63,7 +63,9 @@ class Settings
         'filters'=>['name'=>'Фильтры'],
         'articles' => ['name' => 'Статьи'],
         'sales' => ['name' => 'Акции'],
+        'news' => ['name' => 'Новости'],
         'information' => ['name'=>'Информация'],
+        'advantages' => ['name'=>'Преимущества'],
         'socials' => ['name' => 'Социальные сети'],
         'settings'=>['name'=>'Настройки системы'],
         /*'category'=>[ 'name'=>'Категории', 'img'=>''],
@@ -92,6 +94,7 @@ class Settings
         'hot'   =>  ['Горячее предложение'],
         'discount' => ['Скидка'],
         'price' => ['Цена'],
+        'promo_img' => ['Изображение для главной страницы'],
         'img'=>['Картинка', 'jpg, png'],
         'gallery_img'=>['Галерея'],
         'visible'=>[],
@@ -105,7 +108,7 @@ class Settings
     ];
 	private $blockNeedle=[
 		'vg-rows'=>[],
-		'vg-img'=>['img', 'main_img', 'img_years', 'number_of_years'],
+		'vg-img'=>['img', 'main_img', 'img_years', 'number_of_years', 'promo_img'],
 		'vg-content'=>['content']
 	];
 	private $rootItems=[
@@ -131,7 +134,7 @@ class Settings
         'email'=>['empty'=>true, 'trim'=>true],
         'password'=>['crypt'=>true, 'empty'=>true, 'trim'=>true, 'len'=>8],
         'keywords'=>['count' => 70, 'trim'=>true],
-        'description'=>['count'=>160, 'trim'=>true],
+        'description'=>['count'=>400, 'trim'=>true],
     ];
     private $messages='core/base/messages/';
     static public function get($property){

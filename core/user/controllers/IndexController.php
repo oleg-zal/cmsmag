@@ -14,6 +14,18 @@ class IndexController extends BaseUser
             'where' => ['visible' => 1],
             'order' => ['menu_position']
         ]);
+        $advantages = $this->model->get('advantages', [
+            'where' => ['visible' => 1],
+            'order' => ['menu_position'],
+            'limit' => 6
+        ]);
+        $news = $this->model->get('news', [
+            'where' => ['visible' => 1],
+            'order' => ['date'],
+            'order_direction' => 'DESC',
+            'limit' => 3
+        ]);
+
         $arrHits = [
             'hit' => [
                 'name' => 'Хиты продаж',
@@ -40,7 +52,7 @@ class IndexController extends BaseUser
                 'limit' => 6
             ]);
         }
-        return compact('sales', 'arrHits', 'goods');
+        return compact('sales', 'arrHits', 'goods', 'advantages', 'news');
     }
     protected function testRequest() {
         $model = Model::instance();
