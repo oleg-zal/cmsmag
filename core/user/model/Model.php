@@ -101,7 +101,7 @@ class Model extends BaseModel
                                 $parent[$name] = $rowValue;
                             }
                             else {
-                                $child['name'] = $rowValue;
+                                $child[$row] = $rowValue;
                             }
                         }
                         if ( isset( $goodsCount[$child['id']]['count'] ) ) {
