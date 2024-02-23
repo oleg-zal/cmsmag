@@ -160,5 +160,14 @@
         </div>
     </div>
 </header>
-
+<?php if ($this->getController() !== 'index'):?>
+    <div class="search search-internal">
+        <button>
+            <svg class="inline-svg-icon svg-search">
+                <use xlink:href="/assets/img/icons.svg#search"></use>
+            </svg>
+        </button>
+        <input type="search" placeholder="Поиск по каталогу">
+    </div>
+<?php endif;?>
 <main class="main">

@@ -11,6 +11,7 @@ abstract class BaseUser extends BaseController
     protected $table;
     protected $set;
     protected $menu;
+    protected $breadcrumbs;
 
     protected $socials;
 
@@ -44,12 +45,10 @@ abstract class BaseUser extends BaseController
      * @throws \core\base\exceptions\RouteException
      */
     protected function outputData(){
+        $args=func_get_arg(0);
+        $vars=$args ? $args : [];
+        $this->breadcrumbs = $this->render(TEMPLATE . 'include/breadcrumbs');
         if(!$this->content){
-            $args=func_get_arg(0);
-            $vars=$args ? $args : [];
-            //if(!$this->template){
-            //$this->template=ADMIN_TEMPLATE.'show';
-            //}
             $this->content=$this->render($this->template,$vars);
         }
         $this->header=$this->render(TEMPLATE.'include/header', $vars);
@@ -140,7 +139,7 @@ abstract class BaseUser extends BaseController
             return $arr[2] ?? null;
         }
     }
-    protected function showGoods($data, $parameters, $template = 'goodsitem') {
+    protected function showGoods($data, $parameters=[], $template = 'goodsitem') {
         if (!empty($data)) {
             echo $this->render(TEMPLATE. 'include/' . $template, compact('data', 'parameters'));
         }

@@ -1,10 +1,14 @@
 <?php if (!empty($data)) :?>
-<div class="offers__tabs_card swiper-slide">
-    <div class="offers__tabs_image">
+<?php
+    $mailClass = $parameters['mainClass'] ?? 'offers__tabs_card swiper-slide';
+    $classPrefix = $parameters['prefix'] ?? 'offers';
+?>
+<div class="<?=$mailClass?>">
+    <div class="<?=$classPrefix?>__tabs_image">
         <img src="<?=$this->img($data['img'])?>" alt="<?=$data['name']?>">
     </div>
-    <div class="offers__tabs_description">
-        <div class="offers__tabs_name">
+    <div class="<?=$classPrefix?>__tabs_description">
+        <div class="<?=$classPrefix?>__tabs_name">
             <span><?=$data['name']?></span>
             <?=$data['shot_content']?>
             <?php if (!empty($data['filters'])):?>
@@ -23,15 +27,15 @@
                 </div>
             <?php endif; ?>
         </div>
-        <div class="offers__tabs_price">
+        <div class="<?=$classPrefix?>__tabs_price">
             Цена:
             <?php if (!empty($data['old_price'])):?>
                 <span class="offers_old-price"><?=$data['old_price']?> руб.</span>
             <?php endif;?>
-            <span class="offers_new-price"><?=$data['price']?> руб.</span>
+            <span class="<?=$classPrefix?>_new-price"><?=$data['price']?> руб.</span>
         </div>
     </div>
-    <button class="offers__btn" data-addToCart="<?=$data['id']?>">Купить</button>
+    <button class="<?=$classPrefix?>__btn" data-addToCart="<?=$data['id']?>">Купить</button>
     <?php if (!empty($parameters['icon'])): ?>
         <div class="icon-offer">
             <?=$parameters['icon']?>
