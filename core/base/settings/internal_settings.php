@@ -10,7 +10,7 @@
     const COOKIE_TIME = 60;
     const BLOCK_TIME = 3;
     const END_SLASH='/';
-    const QTY = 8;
+    const QTY = 3;
     const QTY_LINKS = 3;
     const ADMIN_CSS_JS = [
         'style'=>[

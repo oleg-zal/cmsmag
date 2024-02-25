@@ -6,6 +6,12 @@ use core\base\exceptions\DbException;
 
 abstract class BaseModelMethods
 {
+    protected $postNumber;
+    protected $linksNumber;
+    protected $numberPages;
+    protected $page;
+    protected $totalCount;
+
     protected $sql_func=['NOW()','RAND()'];
     protected $tableRows;
     protected $union=[];
@@ -455,5 +461,8 @@ abstract class BaseModelMethods
             $arr['table']=$arr['alias']=$table;
         }
         return $arr;
+    }
+    protected function getTotalCount($table, $where) {
+        return $this->query("SELECT COUNT(*) as count FROM $table $where")[0]['count'];
     }
 }
