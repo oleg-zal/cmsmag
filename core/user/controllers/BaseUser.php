@@ -77,9 +77,10 @@ abstract class BaseUser extends BaseController
                 foreach ($queryString as $key=>$item){
                     $str.=(!$str? '?': '&');
                     if(\is_array($item)){
-                        $key.=[];
-                        foreach ($item as $value){
-                            $str.=$key.'='.$value;
+                        $key.='[]';
+                        foreach ($item as $k => $value) {
+                            $ampers = !empty($item[$k+1]) ? '&' : '';
+                            $str.= "{$key}={$value}{$ampers}";
                         }
                     }else{
                         $str.=$key.'='.$item;

@@ -31,12 +31,38 @@ class CatalogController extends BaseUser
         }
         $catalogFilters = $catalogPrices = $orderDb = null;
         $order = $this->createCatalogOrder($orderDb);
+        $operand = $this->checkFilters($where);
         $goods = $this->model->getGoods([
             'where' => $where,
+            'operand' => $operand,
             'order' => $orderDb['order'],
             'order_direction' => $orderDb['order_direction']
         ], $catalogFilters, $catalogPrices);
         return compact('data', 'goods', 'catalogFilters', 'catalogPrices', 'order');
+    }
+    protected function checkFilters(&$where) {
+        $dbWhere = [];
+        $dbOperand = [];
+        if ( isset($_GET['min_price']) ) {
+            $dbWhere['price'] = $this->clearNum($_GET['min_price']);
+            $dbOperand[] = '>=';
+        }
+        if ( isset($_GET['max_price']) ) {
+            $dbWhere[' price'] = $this->clearNum($_GET['max_price']);
+            $dbOperand[] = '<=';
+        }
+        if ( !empty($_GET['filters']) ) {
+            $dbWhere['id'] = $this->model->get('goods_filters', [
+                'fields' => ['goods_id'],
+                'where' => ['filters_id' => implode(',', $_GET['filters'])],
+                'operand' => ['IN'],
+                'return_query' => true
+            ]);
+            $dbOperand[] = 'IN';
+        }
+        $where = array_merge($dbWhere, $where);
+        $dbOperand[] = '=';
+        return $dbOperand;
     }
     protected function createCatalogOrder(&$orderDb) {
         $order = [
