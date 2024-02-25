@@ -9,6 +9,8 @@ class CatalogController extends BaseUser
     protected function inputData() {
         parent::inputData();
 
+        $quantites = [3, 5, 10];
+
         $data = [];
         if (!empty($this->parameters['alias'])) {
             $data = $this->model->get('category', [
@@ -38,7 +40,7 @@ class CatalogController extends BaseUser
             'order' => $orderDb['order'],
             'order_direction' => $orderDb['order_direction']
         ], $catalogFilters, $catalogPrices);
-        return compact('data', 'goods', 'catalogFilters', 'catalogPrices', 'order');
+        return compact('data', 'goods', 'catalogFilters', 'catalogPrices', 'order', 'quantites');
     }
     protected function checkFilters(&$where) {
         $dbWhere = [];
