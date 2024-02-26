@@ -9,7 +9,7 @@ class CatalogController extends BaseUser
     protected function inputData() {
         parent::inputData();
 
-        $quantities = [3, 5, 10];
+        $quantities = [1, 2, 3, 5, 10];
 
         $data = [];
         if (!empty($this->parameters['alias'])) {

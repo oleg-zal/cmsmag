@@ -7539,3 +7539,7 @@ input[type='search'], input[type='text'], input[type='email'] {
 	color: black;
 	text-decoration: none;
 }
+.pagination-current {
+	font-weight: bold;
+	color: red;
+}
