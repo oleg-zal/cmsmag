@@ -9,7 +9,7 @@ class CatalogController extends BaseUser
     protected function inputData() {
         parent::inputData();
 
-        $quantites = [3, 5, 10];
+        $quantities = [3, 5, 10];
 
         $data = [];
         if (!empty($this->parameters['alias'])) {
@@ -48,7 +48,8 @@ class CatalogController extends BaseUser
             'order_direction' => $orderDb['order_direction'],
             'pagination' => $pagination
         ], $catalogFilters, $catalogPrices);
-        return compact('data', 'goods', 'catalogFilters', 'catalogPrices', 'order', 'quantites');
+        $pages = $this->model->getPagination();
+        return compact('data', 'goods', 'catalogFilters', 'catalogPrices', 'order', 'quantities', 'pages');
     }
     protected function checkFilters(&$where) {
         $dbWhere = [];

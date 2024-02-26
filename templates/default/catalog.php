@@ -122,12 +122,12 @@
                                     </a>
                                 <?php endforeach;?>
                             <?php endif; ?>
-                            <?php if (!empty($quantites)):?>
+                            <?php if (!empty($quantities)):?>
                                 <div class="catalog-section-top-items__unit catalog-section-top-items__toggle"
                                     onclick="this.querySelector('.qtyItems').classList.toggle('opened')">
                                     Показывать по: <span><?=$_SESSION['quantities'] ?? ''?></span>
                                     <div class="qtyItems">
-                                        <?php foreach ($quantites as $item):?>
+                                        <?php foreach ($quantities as $item):?>
                                             <a href="#" style="display: block;"><?=$item?></a>
                                         <?php endforeach;?>
                                     </div>

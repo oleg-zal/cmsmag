@@ -16,9 +16,7 @@ abstract class BaseModelMethods
     protected $tableRows;
     protected $union=[];
 
-    /**
-     * @throws \core\base\exceptions\DbException
-     */
+
     protected function createFields($set, $table='', $join=false): string
     {
         if(\array_key_exists('fields', $set) && $set['fields']===null){
@@ -184,9 +182,6 @@ abstract class BaseModelMethods
         return $where;
     }
 
-    /**
-     * @throws DbException
-     */
     protected function createJoin($set, $table, $new_where=false): array
     {
         $fields='';
@@ -329,9 +324,7 @@ abstract class BaseModelMethods
         return $insert_arr;
     }
 
-    /**
-     * @throws \core\base\exceptions\DbException
-     */
+
     final public function showColumns($table){
         if(!isset($this->tableRows[$table]) || !$this->tableRows[$table]){
             $checkTable=$this->createTableAlias($table);
@@ -464,5 +457,41 @@ abstract class BaseModelMethods
     }
     protected function getTotalCount($table, $where) {
         return $this->query("SELECT COUNT(*) as count FROM $table $where")[0]['count'];
+    }
+    public function getPagination() {
+        if (!$this->numberPages || $this->numberPages === 1 || $this->page > $this->numberPages) {
+            return false;
+        }
+        $res = [];
+        if ($this->page !== 1) {
+            $res['first'] = 1;
+            $res['back'] = $this->page - 1;
+        }
+        if ($this->page > $this->linksNumber + 1) {
+            for ($i=$this->page-$this->linksNumber; $i < $this->page; $i++) {
+                $res['previous'][] = $i;
+            }
+        }
+        else {
+            for ($i=1; $i < $this->page; $i++) {
+                $res['previous'][] = $i;
+            }
+        }
+        $res['current'] = $this->page;
+        if ($this->page+$this->linksNumber < $this->numberPages) {
+            for ($i=$this->page+1; $i<=$this->page+$this->linksNumber; $i++ ) {
+                $res['next'][] = $i;
+            }
+        }
+        else {
+            for ($i=$this->page+1; $i<=$this->numberPages; $i++ ) {
+                $res['next'][] = $i;
+            }
+        }
+        if ($this->page !== $this->numberPages) {
+            $res['forward'] = $this->page + 1;
+            $res['last'] = $this->numberPages;
+        }
+        return $res;
     }
 }
