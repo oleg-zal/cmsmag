@@ -2,10 +2,6 @@
 
 namespace core\user\controllers;
 
-use core\admin\controllers\CreatesitemapController;
-use core\base\controllers\BaseAjax;
-use libraries\FilesEdit;
-
 class AjaxController extends BaseUser
 {
     public function ajax(): string
@@ -20,8 +16,15 @@ class AjaxController extends BaseUser
                     $qty = $this->clearNum($this->ajaxData['qty'] ?? 0);
                     $qty && $_SESSION['quantities'] = $qty;
                     break;
+                case 'add_to_cart':
+                    return $this->addToCart();
+                    break;
             }
         }
         return json_encode(['success' => 0, 'message' => 'No Ajax variable']);
+    }
+    protected function addToCart() {
+        return $this->ajaxData['qty'];
+
     }
 }
