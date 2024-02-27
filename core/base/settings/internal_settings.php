@@ -11,6 +11,7 @@
     const BLOCK_TIME = 3;
     const END_SLASH='/';
     const QTY = 8;
+    const CART = 'cookie';
     const QTY_LINKS = 3;
     const ADMIN_CSS_JS = [
         'style'=>[

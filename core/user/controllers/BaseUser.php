@@ -11,6 +11,7 @@ abstract class BaseUser extends BaseController
     protected $table;
     protected $set;
     protected $menu;
+    protected $cart = [];
     protected $breadcrumbs;
 
     protected $socials;
@@ -225,5 +226,56 @@ HEREDOC;
                 </a>
 HEREDOC;
         }
+    }
+    protected function addToCart($id, $qty) {
+        $id = $this->clearNum($id);
+        $qty = $this->clearNum($qty) ?: 1;
+        if (!$id) {
+            return ['success' => 0, 'message' => "Отсутствует ID товара"];
+        }
+        $data = $this->model->get('goods', [
+            'where' => ['id' => $id, 'visible' => 1],
+            'limit' => 1
+        ]);
+        if (!$data) {
+            return ['success' => 0, 'message' => "Отсутствует товар для добавления в корзину"];
+        }
+        $cart = &$this->getCart();
+        $cart[$id] = $qty;
+        $this->updateCart();
+
+        return true;
+    }
+    protected function getCartData($cartChanged=false) {
+        if (!empty($this->cart) && !$cartChanged) {
+            return $this->cart;
+        }
+    }
+    protected function totalSum() {
+
+    }
+    protected function updateCart() {
+        $cart = &$this->getCart();
+        if (defined('CART') && strtolower(CART) === 'cookie') {
+            setcookie('cart', json_encode($cart), time() * 3600 * 24 * 4, PATH);
+        }
+        return true;
+    }
+    protected function &getCart() {
+        if (!defined('CART') || strtolower(CART) !== 'cookie') {
+            if ( !isset($_SESSION['cart']) ) {
+                $_SESSION['cart'] = [];
+            }
+            return $_SESSION['cart'];
+        }
+        if ( !isset($_COOKIE['cart']) ) {
+            $_COOKIE['cart'] = [];
+        }
+        else {
+            $_COOKIE['cart'] =  is_string($_COOKIE['cart']) ?
+                                json_decode($_COOKIE['cart'], true) :
+                                $_COOKIE['cart'];
+        }
+        return $_COOKIE['cart'];
     }
 }
