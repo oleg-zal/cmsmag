@@ -25,6 +25,11 @@ class Model extends BaseModel
         }
         $goods = $this->get('goods', $set);
         if ($goods) {
+            if ($goodsColumns['discount']) {
+                foreach ($goods as $key => $item) {
+                    $this->applyDiscount($goods[$key], $item['discount']);
+                }
+            }
             unset($set['join'], $set['join_structure'], $set['pagination']);
             if ($catalogPrices !== false && !empty($goodsColumns['price'])){
                 $set['fields'] = ['MIN(price) as min_price', 'MAX(price) as max_price'];
@@ -75,11 +80,7 @@ class Model extends BaseModel
                         ]
                     ]
                 ]);
-                if ($goodsColumns['discount']) {
-                    foreach ($goods as $key => $item) {
-                        $this->applyDiscount($goods[$key], $item['discount']);
-                    }
-                }
+
                 if ($filters) {
                     $filterIds = implode(',', array_unique(array_column($filters, 'id')) );
                     $goodIds = implode(',', array_unique(array_column($filters, 'goods_id')) );

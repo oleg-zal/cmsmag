@@ -4,7 +4,7 @@ namespace core\user\controllers;
 
 class AjaxController extends BaseUser
 {
-    public function ajax(): string
+    public function ajax()
     {
         if (isset($this->ajaxData['ajax'])) {
             $this->inputData();

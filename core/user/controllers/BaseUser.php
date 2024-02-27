@@ -243,23 +243,74 @@ HEREDOC;
         $cart = &$this->getCart();
         $cart[$id] = $qty;
         $this->updateCart();
-
-        return true;
+        $res = $this->getCartData(true);
+        if ($res && !empty($res['goods'][$id])) {
+            $res['current'] = $res['goods'][$id];
+        }
+        return $res;
     }
     protected function getCartData($cartChanged=false) {
         if (!empty($this->cart) && !$cartChanged) {
             return $this->cart;
         }
+        $cart = &$this->getCart();
+        if (empty($cart)) {
+            $this->clearCart();
+            return false;
+        }
+        $goods = $this->model->getGoods([
+            'where' => ['id' => array_keys($cart), 'visible' => 1],
+            'operand' => ['IN', '=']
+        ], ...[false, false]);
+        if (empty($goods)) {
+            $this->clearCart();
+            return false;
+        }
+        $cartChanged = false;
+        foreach($cart as $id => $qty) {
+            if (empty($goods[$id])) {
+                unset($cart['$id']);
+                $cartChanged = true;
+                continue;
+            }
+            $this->cart['goods'][$id] = $goods[$id];
+            $this->cart['goods'][$id]['qty'] = $qty;
+        }
+        if ($cartChanged) {
+            $this->updateCart();
+        }
+        return $this->totalSum();
     }
     protected function totalSum() {
-
+        if(empty($this->cart['goods'])) {
+            $this->clearCart();
+            return null;
+        }
+        $this->cart['total_sum'] = $this->cart['total_old_sum'] = $this->cart['total_qty'] = 0;
+        foreach ($this->cart['goods'] as $item) {
+            $this->cart['total_qty'] += $item['qty'];
+            $this->cart['total_sum'] += round($item['qty'] * $item['price'], 2);
+            if ( !empty($item['old_price']) ) {
+                $this->cart['total_old_sum'] += round($item['qty'] * $item['old_price'], 2);
+            }
+        }
+        return $this->cart;
     }
     protected function updateCart() {
         $cart = &$this->getCart();
         if (defined('CART') && strtolower(CART) === 'cookie') {
-            setcookie('cart', json_encode($cart), time() * 3600 * 24 * 4, PATH);
+            setcookie('cart', json_encode($cart), time()+(60*60*24*30), PATH);
         }
         return true;
+    }
+    public function clearCart() {
+        unset($_COOKIE['cart']);
+        unset($_SESSION['cart']);
+        if (defined('CART') && strtolower(CART) === 'cookie') {
+            setcookie('cart', '', 1, PATH);
+        }
+        $this->cart = [];
+        return null;
     }
     protected function &getCart() {
         if (!defined('CART') || strtolower(CART) !== 'cookie') {

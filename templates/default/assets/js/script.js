@@ -268,7 +268,12 @@ function addToCart() {
                         console.error(res);
                     },
                     success: res => {
-                        console.log(res);
+                        try {
+                            res = JSON.parse(res);
+                            console.log(res);
+                        } catch (e) {
+                            alert('Ошибка добавления в корзину');
+                        }
                     }
                 });
             }
