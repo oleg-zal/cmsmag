@@ -24,6 +24,12 @@ class ProductController extends BaseUser
             throw new RouteException("Отсутствует товар по ссылке {$this->parameters['alias']}");
         }
         $data = array_shift($data);
-        return compact('data');
+        $deliveryInfo = $this->model->get('information', [
+            'where' => ['visible' => 1, 'name' => 'доставка', ' name' => 'оплата'],
+            'operand' => ['=','%LIKE%'],
+            'limit' => 1
+        ]);
+        $deliveryInfo && $deliveryInfo = array_shift($deliveryInfo);
+        return compact('data', 'deliveryInfo');
     }
 }

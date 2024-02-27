@@ -207,10 +207,40 @@ $(function () {
             setTimeout( () => {
                 location.href = location.pathname;
             } )
-
         }
-
-
-
     })
 });
+document.addEventListener('DOMContentLoaded', () => {
+    let moreBtn = document.querySelector('.card-main-info__description .more-button');
+    if (moreBtn) {
+        moreBtn.addEventListener('click', e => {
+            e.preventDefault();
+            document.querySelectorAll('.card-tabs__toggle.tabs__toggle')[1].dispatchEvent(new Event('click'));
+            window.scrollTo({
+                top: document.querySelector('.card-tabs').getBoundingClientRect().top + scrollY,
+                behavior: 'smooth'
+            })
+        })
+    }
+    (function () {
+        let start = 0;
+        document.querySelectorAll('.card-main-gallery-thumb__slide').forEach(item => {
+            item.addEventListener('click', () => {
+                let itemCoords = item.getBoundingClientRect();
+                let parentCoords = item.parentElement.parentElement.getBoundingClientRect();
+                let itemY = scrollY + itemCoords.y;
+                let parentY = scrollY + parentCoords.y;
+                let margin = parseFloat(getComputedStyle(item)['marginBottom']);
+                let top = Math.ceil(itemCoords.height +margin);
+                if (item.nextElementSibling && Math.ceil(itemY-parentY+top )>=parentCoords.height ) {
+                    start -= top;
+                }
+                else if (item.previousElementSibling && itemY<=parentY ) {
+                    start += top;
+                }
+                item.parentElement.style.transition = '0.3s';
+                item.parentElement.style.transform = `translate3d(0px, ${start}px, 0px)`;
+            })
+        })
+    })()
+})
