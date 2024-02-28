@@ -26,6 +26,9 @@ abstract class BaseUser extends BaseController
             'order'=>['id'],
             'limit'=>1
         ]);
+        if (!$this->isPost() && !$this->isPost()) {
+            $this->getCartData();
+        }
         $this->set && $this->set=$this->set[0];
         $this->menu['catalog']=$this->model->get('category', [
             'where'=>['visible'=>1, 'parent_id' => null],

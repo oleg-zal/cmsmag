@@ -7543,3 +7543,14 @@ input[type='search'], input[type='text'], input[type='email'] {
 	font-weight: bold;
 	color: red;
 }
+.cart-btn-wrap [data-totalQty] {
+	width: 15px; height: 15px; border: 1px solid white; background: white; border-radius: 50%;
+	position: absolute;
+	right: calc(50% - 15px);
+	bottom: calc(50% - 17px) ;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 10px;
+	color: black;
+}

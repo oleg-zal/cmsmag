@@ -271,6 +271,21 @@ function addToCart() {
                         try {
                             res = JSON.parse(res);
                             console.log(res);
+                            if (typeof res.current === 'undefined') {
+                                throw new Error();
+                            }
+                            item.setAttribute('data-toCartAdded', true);
+                            ['data-totalQty', 'data-totalSum', 'data-totalOldSum'].forEach(attr => {
+                                let cartAttr = attr.replace(/data-/, '')
+                                    .replace(/([^A-Z])([A-Z])/g, '$1_$2').toLowerCase();
+                                console.log(cartAttr);
+                                document.querySelectorAll(`[${attr}]`).forEach(el => {
+                                    if (typeof res[cartAttr] !== 'undefined') {
+                                        el.innerHTML = res[cartAttr];
+                                    }
+                                })
+                            });
+
                         } catch (e) {
                             alert('Ошибка добавления в корзину');
                         }
