@@ -7215,7 +7215,10 @@ input[type='search'], input[type='text'], input[type='email'] {
 }
 
 .basket-btn{
-	display: block;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-decoration: none;
 	width: 280px;
 	text-transform: uppercase;
     min-height: 50px;
