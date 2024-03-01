@@ -7557,3 +7557,36 @@ input[type='search'], input[type='text'], input[type='email'] {
 	font-size: 10px;
 	color: black;
 }
+.order-popup {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	background: rgba(0,0,0,0.6);
+	z-index: 10;
+	display: none;
+	justify-content: center;
+	align-items: center;
+
+}
+.order-popup.open {
+	display: flex;
+}
+.order-popup__inner {
+	margin: 20px;
+	flex-basis: 600px;
+	padding: 30px 20px;
+	background: white;
+}
+.order-popup__inner > input, .order-popup__inner > textarea {
+	width: 100%;
+	padding: 3px 5px;
+	border: 1px solid black;
+	margin-bottom: 15px;
+
+}
+.order-popup__inner > .send-order {
+	display: flex;
+	justify-content: center;
+}

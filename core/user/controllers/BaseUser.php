@@ -316,6 +316,15 @@ HEREDOC;
         $this->cart = [];
         return null;
     }
+    protected function deleteCartData($id) {
+        $id = $this->clearNum($id);
+        if ($id) {
+            $cart = &$this->getCart();
+            unset($cart[$id]);
+            $this->updateCart();
+            $this->getCartData(true);
+        }
+    }
     protected function &getCart() {
         if (!defined('CART') || strtolower(CART) !== 'cookie') {
             if ( !isset($_SESSION['cart']) ) {
