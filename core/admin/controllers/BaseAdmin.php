@@ -194,14 +194,7 @@ abstract class BaseAdmin extends BaseController
             }
         }
     }
-    protected function addSessionData($arr=[])
-    {
-        if (!$arr) $arr = $_POST;
-        foreach ($arr as $key => $item) {
-            $_SESSION['res'][$key] = $item;
-        }
-        $this->redirect();
-    }
+
     protected function countChar($str, $counter, $answer, $arr) {
         if (mb_strlen($str) > $counter) {
             $str_res = mb_str_replace('$1', $answer, $this->messages['count']);

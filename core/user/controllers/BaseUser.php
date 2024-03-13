@@ -13,6 +13,7 @@ abstract class BaseUser extends BaseController
     protected $menu;
     protected $cart = [];
     protected $breadcrumbs;
+    protected $userData = [];
 
     protected $socials;
 
@@ -229,6 +230,10 @@ HEREDOC;
                 </a>
 HEREDOC;
         }
+    }
+    protected function setFormValues($key, $property, $arr = []) {
+        !$arr && $arr = $_SESSION['res'] ?? [];
+        return $arr[$key] ?? ($this->$property[$key] ?? '');
     }
     protected function addToCart($id, $qty) {
         $id = $this->clearNum($id);

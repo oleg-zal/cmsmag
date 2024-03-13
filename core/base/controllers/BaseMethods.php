@@ -112,6 +112,14 @@ trait BaseMethods
                 0,
                 \PREG_SPLIT_NO_EMPTY)[0];
     }
+    protected function addSessionData($arr=[])
+    {
+        if (!$arr) $arr = $_POST;
+        foreach ($arr as $key => $item) {
+            $_SESSION['res'][$key] = $item;
+        }
+        $this->redirect();
+    }
     protected function dateFormat($date) {
         if (!$date) {
             return $date;
