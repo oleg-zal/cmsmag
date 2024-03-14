@@ -337,5 +337,68 @@ function changeQty() {
             }
         })
     });
-
+}
+document.querySelectorAll('input[type="tel"]').forEach(item => phoneValidate(item));
+function phoneValidate(item) {
+    // +7(495)111-22-33
+    let countriesOptions = {
+        '+7': {
+            limit: 16,
+            firstDigits: '87',
+            formatChars: {
+                2:  '(',
+                6:  ')',
+                10: '-',
+                13: '-'
+            }
+        },
+        '+38': {
+            limit: 17,
+            formatChars: {
+                3:  '(',
+                7:  ')',
+                11: '-',
+                14: '-'
+            }
+        }
+    }
+    item.addEventListener('input', e => {
+        if (e.inputType === 'deleteContentBackward' || e.inputType === 'deleteContentForward') {
+            return false;
+        }
+        item.value = item.value.replace(/\D/g, '');
+        if (item.value) {
+            for (let code in countriesOptions) {
+                if (countriesOptions.hasOwnProperty(code) && countriesOptions[code].firstDigits) {
+                    let regexp = new RegExp(`^[${countriesOptions[code].firstDigits}]`)
+                    if (regexp.test(item.value)) {
+                        item.value = item.value.replace(regexp, code);
+                        break;
+                    }
+                }
+            }
+            if (!/^\+/.test(item.value)) {
+                item.value = '+' + item.value;
+            }
+            for (let code in countriesOptions) {
+                if (countriesOptions.hasOwnProperty(code) ) {
+                    let regexp = new RegExp(code.replace(/\+/g, '\\+'), 'g');
+                    if (regexp.test(item.value)) {
+                        for (let i in countriesOptions[code].formatChars) {
+                            let j = +i;
+                            if (item.value[j] && item.value[j] !== countriesOptions[code].formatChars[i]) {
+                                item.value = item.value.substring(0, j) + countriesOptions[code].formatChars[i] +
+                                    item.value.substring(j);
+                            }
+                        }
+                    }
+                    if (item.value[countriesOptions[code].limit]) {
+                        item.value = item.value.substring(0, countriesOptions[code].limit)
+                    }
+                }
+            }
+        }
+    })
+    item.dispatchEvent(new Event('input'));
+    item.addEventListener('change', () => phoneValidate(item));
 }
