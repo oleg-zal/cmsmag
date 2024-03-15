@@ -27,7 +27,7 @@ abstract class BaseUser extends BaseController
             'order'=>['id'],
             'limit'=>1
         ]);
-        if (!$this->isPost() && !$this->isPost()) {
+        if ( !$this->isAJAX() ) {
             $this->getCartData();
         }
         $this->set && $this->set=$this->set[0];

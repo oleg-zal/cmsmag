@@ -114,6 +114,7 @@
                                     <label class="order-registration-radio-item">
                                         <input class="order-registration-rad-inp"
                                                type="radio"
+                                               value="<?=$item['id']?>"
                                                name="payments_id"
                                                <?=!$key ? 'checked' : ''?>
                                         >
@@ -133,6 +134,7 @@
                                     <label class="order-registration-radio-item">
                                         <input class="order-registration-rad-inp"
                                                type="radio"
+                                               value="<?=$item['id']?>"
                                                name="delivery_id"
                                                <?=!$key ? 'checked' : ''?>
                                         >
