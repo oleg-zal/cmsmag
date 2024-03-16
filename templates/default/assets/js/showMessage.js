@@ -40,6 +40,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 }
             }
+            ['click', 'scroll'].forEach( event =>  document.addEventListener(event, hideMessages) )
         }
+    }
+    function hideMessages() {
+        let messageWrap = document.querySelector('.wq-message__wrap');
+        if (messageWrap) {
+            messageWrap.remove()
+        }
+        ['click', 'scroll'].forEach( event =>  document.removeEventListener(event, hideMessages) )
     }
 })

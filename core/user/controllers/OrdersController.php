@@ -2,6 +2,7 @@
 
 namespace core\user\controllers;
 
+use core\base\models\UserModel;
 use core\user\helpers\ValidationHelper;
 
 class OrdersController extends BaseUser
@@ -61,6 +62,62 @@ class OrdersController extends BaseUser
                 $visitor[$key] = $item;
             }
         }
-        $a=1;
+        if ( empty($visitor['email']) && empty($visitorT['phone']) ) {
+            $this->sendError('Отсутствуют данные пользователя для оформления заказа');
+        }
+        $visitorWhere = $visitorContition = [];
+        if ( !empty($visitor['email']) && !empty($visitor['phone']) ) {
+            $visitorWhere = [
+                'email' => $visitor['email'],
+                'phone' => $visitor['phone']
+            ];
+            $visitorContition = ['OR'];
+        }
+        else {
+            $visitorKey = !empty($visitor['email']) ? 'email' : 'phone';
+            $visitorWhere[$visitorKey] = $visitor[$visitorKey];
+        }
+        $resVisitor = $this->model->get('visitors', [
+            'where' => $visitorWhere,
+            'condition' => $visitorContition,
+            'limit' => 1
+        ]);
+        if ($resVisitor) {
+            $resVisitor = $resVisitor[0];
+            $order['visitors_id'] = $resVisitor['id'];
+        }
+        else {
+            $order['visitors_id'] = $this->model->add('visitors', [
+                'fields' => $visitor,
+                'return_id' => true
+            ]);
+        }
+        $order['total_sum'] = $this->cart['total_sum'];
+        $order['total_qty'] = $this->cart['total_qty'];
+        $order['total_old_sum'] = $this->cart['total_old_sum'];
+        $baseStatus = $this->model->get('orders_statuses', [
+            'field' => ['id'],
+            'order' => ['menu_position'],
+            'limit' => 1
+        ]);
+        $baseStatus && $order['orders_statuses_id'] = $baseStatus[0]['id'];
+        $order['id'] = $this->model->add('orders', [
+            'fields' => $order,
+            'return_id' => true
+        ]);
+        if (!$order['id']) {
+            $this->sendError('Ошибка сохранения заказа. Свяжитесь с администрацией сайта по тел. ' . $this->set['phone']);
+        }
+        if (!$resVisitor) {
+            UserModel::instance()->checkUser($order['visitors_id']);
+        }
+        $this->sendSuccess('Спасибо за заказ. Наши менеджеры свяжутся с Вами');
+        $this->sendOrderEmail(['order' => $order, 'visitor' => $visitor]);
+        $this->clearCart();
+        $this->redirect();
+        //$a=1;
+    }
+    protected function sendOrderEmail(array $orderData) {
+
     }
 }
