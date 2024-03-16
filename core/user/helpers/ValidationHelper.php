@@ -17,7 +17,7 @@ trait ValidationHelper
     protected function phoneField($value, $answer = null) {
         $value = preg_replace('/\D/', '', $value);
         if (strlen($value) === 11) {
-            $value = preg_replace('^8', '7', $value);
+            $value = preg_replace('/^8/', '7', $value);
         }
         return $value;
     }

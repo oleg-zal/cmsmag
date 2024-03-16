@@ -111,11 +111,38 @@ class OrdersController extends BaseUser
         if (!$resVisitor) {
             UserModel::instance()->checkUser($order['visitors_id']);
         }
+        if ( !$this->setOrdersGoods($order) ) {
+            $this->sendError('Ошибка сохранения товаров заказа. Обратитесь к администрации');
+        }
         $this->sendSuccess('Спасибо за заказ. Наши менеджеры свяжутся с Вами');
         $this->sendOrderEmail(['order' => $order, 'visitor' => $visitor]);
         $this->clearCart();
         $this->redirect();
-        //$a=1;
+    }
+    protected function setOrdersGoods(array $order) {
+        if (in_array('orders_goods', $this->model->showTables())) {
+            $ordersGoods = [];
+            $ordersGoodsColumns = $this->model->showColumns('orders_goods');
+            foreach ($this->cart['goods'] as $key => $item) {
+                $ordersGoods[$key]['orders_id'] = $order['id'];
+                foreach ($item as $field => $value) {
+                    if ( !empty($ordersGoodsColumns[$field]) ) {
+                        if ( $ordersGoodsColumns['id_row'] === $field ) {
+                            if ($ordersGoodsColumns['goods_id']) {
+                                $ordersGoods[$key]['goods_id'] = $value;
+                            }
+                        }
+                        else {
+                            $ordersGoods[$key][$field] = $value;
+                        }
+                    }
+                }
+            }
+            return $this->model->add('orders_goods', [
+                'fields' => $ordersGoods
+            ]);
+        }
+        return false;
     }
     protected function sendOrderEmail(array $orderData) {
 
