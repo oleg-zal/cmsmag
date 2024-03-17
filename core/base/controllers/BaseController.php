@@ -110,6 +110,7 @@ abstract class BaseController
         if(!($this->userId=UserModel::instance()->checkUser(false, $type))){
             $type && $this->redirect(\PATH);
         }
+        $this->userData = $this->userId;
         if(\property_exists($this, 'userModel')){
             $this->userModel=UserModel::instance();
         }
