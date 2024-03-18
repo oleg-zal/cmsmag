@@ -249,7 +249,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (item.getAttribute('data-popup')) {
             let popupElement = document.querySelector(`.${item.getAttribute('data-popup')}`)
             if (popupElement) {
-                item.addEventListener('click', () => {
+                item.addEventListener('click', e => {
+                    e.preventDefault();
                     popupElement.classList.add('open');
                 })
                 popupElement.addEventListener('click', e => {
@@ -262,6 +263,15 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
     });
+    let loginVariants = document.querySelectorAll('.login-popup h2 span');
+    let loginFormVariants = document.querySelectorAll('.login-popup form');
+    loginVariants.forEach(item => {
+        item.addEventListener('click', () => {
+            let index = [...loginVariants].indexOf(item)
+            loginFormVariants[index].style.display = 'block';
+            loginFormVariants[+!index].style.display = 'none';
+        })
+    })
 })
 function addToCart() {
     let addToCart = document.querySelectorAll('[data-addToCart]');

@@ -232,7 +232,7 @@ HEREDOC;
 HEREDOC;
         }
     }
-    protected function setFormValues($key, $property, $arr = []) {
+    protected function setFormValues($key, $property=[], $arr = []) {
         !$arr && $arr = $_SESSION['res'] ?? [];
         return $arr[$key] ?? ($this->$property[$key] ?? '');
     }

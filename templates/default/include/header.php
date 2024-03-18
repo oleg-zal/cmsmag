@@ -90,15 +90,17 @@
                     </div>
                 </div>
                 <div class="header__sidebar_btn">
-                    <a href="<?=$this->alias($value['external_alias']);?>">
-                        <img src="<?=PATH . TEMPLATE?>assets/img/user.png" alt="" style="max-width: 70%">
+                    <a href="<?=$this->userData ? $this->alias($item['external_alias']) : '#'?>"
+                       <?=!$this->userData ? 'data-popup="login-popup"' : ''?>
+                    >
+                        <img src="<?=PATH . TEMPLATE?>assets/img/user.png" alt="" >
                     </a>
                 </div>
                 <?php if(!empty($this->socials)):
                     foreach ($this->socials as $value):?>
                         <div class="header__sidebar_btn">
                             <a href="<?=$this->alias($value['external_alias']);?>">
-                                <img src="<?=$this->img($value['img']);?>" alt="<?=$value['name']?>" style="max-width: 70%">
+                                <img src="<?=$this->img($value['img']);?>" alt="<?=$value['name']?>" >
                             </a>
                         </div>
                     <?php endforeach;?>

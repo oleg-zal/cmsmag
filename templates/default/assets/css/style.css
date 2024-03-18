@@ -7557,7 +7557,7 @@ input[type='search'], input[type='text'], input[type='email'] {
 	font-size: 10px;
 	color: black;
 }
-.order-popup {
+.order-popup, .login-popup {
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -7570,7 +7570,14 @@ input[type='search'], input[type='text'], input[type='email'] {
 	align-items: center;
 
 }
-.order-popup.open {
+.login-popup h2 {
+	display: flex;
+	justify-content: space-between;
+}
+.login-popup h2 span {
+	cursor: pointer;
+}
+.order-popup.open, .login-popup.open {
 	display: flex;
 }
 .order-popup__inner {
@@ -7581,14 +7588,20 @@ input[type='search'], input[type='text'], input[type='email'] {
 	max-height: 100vh;
 	overflow-y: auto;
 }
-.order-popup__inner > input, .order-popup__inner > textarea {
+.order-popup__inner input, .order-popup__inner textarea {
 	width: 100%;
 	padding: 3px 5px;
 	border: 1px solid black;
 	margin-bottom: 15px;
 
 }
-.order-popup__inner > .send-order {
+.order-popup__inner .send-order {
 	display: flex;
 	justify-content: center;
+}
+.header__sidebar_btn img {
+	width: 35px;
+	height: 35px;
+	object-fit: contain;
+	//filter: brightness(0) invert(1);
 }
