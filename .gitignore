@@ -4,3 +4,4 @@ error.log
 /log/*.txt
 /log/*.xml
 /vendor
+config.php

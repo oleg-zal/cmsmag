@@ -7,4 +7,5 @@
     const USER = 'root';
     const PASSWORD = '1961';
     const DB_NAME = 'shop';
+    const SMTP_PASS = 'foxu knsi mqev ckso';
 

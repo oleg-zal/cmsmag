@@ -89,6 +89,11 @@
                         <span class="burger-desc">меню</span>
                     </div>
                 </div>
+                <div class="header__sidebar_btn">
+                    <a href="<?=$this->alias($value['external_alias']);?>">
+                        <img src="<?=PATH . TEMPLATE?>assets/img/user.png" alt="" style="max-width: 70%">
+                    </a>
+                </div>
                 <?php if(!empty($this->socials)):
                     foreach ($this->socials as $value):?>
                         <div class="header__sidebar_btn">
