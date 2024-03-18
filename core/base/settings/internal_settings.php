@@ -64,3 +64,6 @@
         }
     }
     spl_autoload_register('autoLoadMainClasses');
+    if (is_readable('vendor/autoload.php')) {
+        include 'vendor/autoload.php';
+    }

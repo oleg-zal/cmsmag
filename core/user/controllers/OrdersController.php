@@ -178,6 +178,9 @@ class OrdersController extends BaseUser
                     }
                 }
             }
+            $sender = new SendMailController();
+            $sender->setMailBody($templatesArr);
+            $sender->send($orderData['visitor']['email']);
         }
         $a=1;
     }
