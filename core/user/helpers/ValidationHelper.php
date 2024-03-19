@@ -36,5 +36,6 @@ trait ValidationHelper
     }
     protected function sendSuccess($text, $class = 'success') {
         $this->sendError($text, $class);
+        $this->redirect();
     }
 }

@@ -90,7 +90,7 @@
                     </div>
                 </div>
                 <div class="header__sidebar_btn">
-                    <a href="<?=$this->userData ? $this->alias($item['external_alias']) : '#'?>"
+                    <a href="<?=$this->userData ? $this->alias('lk') : '#'?>"
                        <?=!$this->userData ? 'data-popup="login-popup"' : ''?>
                     >
                         <img src="<?=PATH . TEMPLATE?>assets/img/user.png" alt="" >
