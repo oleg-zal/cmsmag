@@ -19,9 +19,15 @@ class AjaxController extends BaseUser
                 case 'add_to_cart':
                     return $this->_addToCart();
                     break;
+                case 'search':
+                    return $this->search();
+                    break;
             }
         }
         return json_encode(['success' => 0, 'message' => 'No Ajax variable']);
+    }
+    protected function search() {
+        return (new SearchController())->search();
     }
     protected function _addToCart() {
         return $this->addToCart($this->ajaxData['id'] ?? null, $this->ajaxData['qty'] ?? 1 );

@@ -137,4 +137,16 @@ class Model extends BaseModel
             $data['price'] = $data['old_price'] - $data['old_price'] / 100 * $discount;
         }
     }
+    public function searchGoodsIds($search): array
+    {
+        $sql = "SELECT DISTINCT goods.id FROM goods 
+                WHERE name LIKE '%$search%' OR shot_content LIKE '%$search%' OR content LIKE '%$search%' 
+                OR goods.id IN (
+                    SELECT goods_id FROM goods_filters 
+                        INNER JOIN filters
+                        ON goods_filters.filters_id = filters.id AND filters.name LIKE '%$search%'                
+                )";
+        $data = $this->query($sql);
+        return $data ? array_column($data, 'id') : [];
+    }
 }

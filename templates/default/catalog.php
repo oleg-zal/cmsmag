@@ -10,6 +10,7 @@
             <?php if (empty($goods)):?>
                 <h2>По вашему запросу ничего не найдено</h2>
             <?php else: ?>
+                <?php if ( empty( $dontShowAside ) ): ?>
                 <aside class="catalog-aside">
                     <?php if ( !empty($catalogFilters) || !empty($catalogPrices) ):?>
                         <div class="catalog-aside__wrap">
@@ -100,6 +101,7 @@
                         </div>
                     <?php endif; ?>
                 </aside>
+                <?php endif; ?>
                 <section class="catalog-section catalog-section__four">
                     <div class="catalog-section-top">
                         <div class="catalog-section-top-items">
