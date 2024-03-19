@@ -22,7 +22,7 @@ abstract class BaseUser extends BaseController
      */
     protected function inputData(){
         $this->init();
-        //$this->checkAuth();
+        $this->checkAuth();
         !$this->model && $this->model=Model::instance();
         $this->set=$this->model->get('settings', [
             'order'=>['id'],
