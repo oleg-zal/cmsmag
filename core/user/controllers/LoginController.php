@@ -17,6 +17,9 @@ class LoginController extends BaseUser
                 case 'registration':
                     $this->registration();
                     break;
+                case 'login':
+                    $this->login();
+                    break;
             }
         }
         throw new RouteException('Такой страницы не существует');
@@ -27,8 +30,11 @@ class LoginController extends BaseUser
         }
         $_POST['password'] = trim( $_POST['password'] ?? '');
         $_POST['confirm_password'] = trim( $_POST['confirm_password'] ?? '');
-        if ($this->userData && !$_POST['password']) {
+        if ( $this->userData && !$_POST['password'] ) {
             unset($_POST['password']);
+        }
+        elseif ( !$this->userData && !$_POST['password'] ) {
+            $this->sendError('Заполните поле ПАРОЛЬ');
         }
         if ( isset($_POST['password']) && $_POST['password'] !== $_POST['confirm_password'] ) {
             $this->sendError('Пароли не совпадают');
@@ -70,6 +76,9 @@ class LoginController extends BaseUser
             $field = $res['phone'] === $_POST['phone'] ? 'телефон' : 'email';
             $this->sendError("Такой $field уже зарегистрирован");
         }
+        if ( !empty($_POST['password']) ) {
+            $_POST['password'] = md5( $_POST['password'] );
+        }
         $id = $this->model->add('visitors', [
             'return_id' => true
         ]);
@@ -80,5 +89,24 @@ class LoginController extends BaseUser
         }
         $this->sendError('Произошла внутренняя ошибка. Свяжитесь с администрацией сайта');
 
+    }
+    protected function login() {
+        $login = $this->clearStr($_POST['login'] ?? '');
+        $password = $this->clearStr($_POST['password'] ?? '');
+        if (!$login || !$password) {
+            $this->sendError('Заполните поля для авторизации');
+        }
+        $password = md5($password);
+        $res = $this->model->get('visitors', [
+            'where' => ['email' => $login, 'password' => $password],
+            'limit' => 1
+        ]);
+        if (!$res) {
+            $this->sendError('Некорректные данные для входа');
+        }
+        if ( UserModel::instance()->checkUser($res[0]['id']) ) {
+            $this->sendSuccess('Добро пожаловать ' . $res[0]['name']);
+        }
+        $this->sendError('Произошла внутренняя ошибка при авторизации.');
     }
 }
