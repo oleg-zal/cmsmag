@@ -114,12 +114,11 @@ class OrdersController extends BaseUser
         if ( !($goods = $this->setOrdersGoods($order) ) ) {
             $this->sendError('Ошибка сохранения товаров заказа. Обратитесь к администрации');
         }
-        $this->sendSuccess('Спасибо за заказ. Наши менеджеры свяжутся с Вами');
         $order['delivery'] = $this->delivery[$order['delivery_id']]['name'] ?? '';
         $order['payments'] = $this->payments[$order['payments_id']]['name'] ?? '';
         $this->sendOrderEmail(['order' => $order, 'visitor' => $visitor, 'goods' => $goods]);
         $this->clearCart();
-        $this->redirect();
+        $this->sendSuccess('Спасибо за заказ. Наши менеджеры свяжутся с Вами');
     }
     protected function setOrdersGoods(array $order) {
         if (in_array('orders_goods', $this->model->showTables())) {

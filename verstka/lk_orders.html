@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, shrink-to-fit=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Главная</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/lk.css">
+
+
+</head>
+
+<body>
+
+<div class="overlay"></div>
+
+<main class="main">
+
+    <div class="container">
+        <div class="wrapper wrapper_center">
+            <h1 class="page-title">Мои заказы</h1>
+        </div>
+    </div>
+
+    <section class="section">
+        <div class="container">
+            <div class="wrapper_internal wrapper_lk">
+                <aside class="internal-aside internal-aside_lk">
+                    <div class="internal-aside-items">
+                        <a href="/personal/" class="internal-aside-item internal-aside-item_active">
+                            Мой аккаунт </a>
+                        <a href="/personal/orders/" class="internal-aside-item ">
+                            Мои заказы </a>
+                        <a href="/about/contacts/" class="internal-aside-item ">
+                            Выход </a>
+                    </div>
+                </aside>
+                <div class="cabinet cabinet_switches lk-body">
+
+                    <div class="switchTitles second">
+                        <div class="active" data-innerswitch="order_switch1">Текущий заказ</div>
+                        <div data-innerswitch="order_switch2" class="">Все заказы (2)</div>
+                    </div>
+
+                    <script>
+                        document.addEventListener('DOMContentLoaded', () => {
+
+                            let innerSwitch = document.querySelectorAll('[data-innerswitch]')
+
+                            let innerSwitched = document.querySelectorAll('[data-innerswitched]')
+
+                            if (innerSwitched.length) {
+
+                                innerSwitch.forEach((item, index) => {
+
+                                    item.addEventListener('click', () => {
+
+                                        if (typeof innerSwitched[index] !== 'undefined' && !item.classList.contains('active')) {
+
+                                            innerSwitch.forEach(el => el.classList.remove('active'))
+                                            innerSwitched.forEach(el => el.classList.remove('active'))
+
+                                            item.classList.add('active')
+                                            innerSwitched[index].classList.add('active')
+
+                                        }
+
+                                    })
+
+                                })
+
+                            }
+
+                        })
+                    </script>
+
+                    <div class="active" data-innerswitched="order_switch1">
+                        <div class="order_title">
+                            <h3>
+                                Заказ №60
+                            </h3>
+                        </div>
+                        <ul class="info_panel">
+                            <li>
+                                <span class="name">
+                                    Всего:
+                                </span>
+                                <span class="info">
+                                            1 Товар
+                                </span>
+                            </li>
+                            <li>
+                                <span class="name">
+                                    Стоимость:
+                                </span>
+                                <span class="info">
+                                    5 ₽
+                                </span>
+                            </li>
+                            <li>
+                                <span class="name">
+                                    Дата формирования:
+                                </span>
+                                <span class="info">
+                                    2022-05-16 11:09:09
+                                </span>
+                            </li>
+                            <li>
+                                <span class="name">
+                                    Статус:
+                                </span>
+                                <span class="info">
+                                    Получен
+                                </span>
+                            </li>
+                        </ul>
+                        <div class="table_wrap">
+                            <table>
+                                <thead>
+                                <tr>
+                                    <th>Артикул</th>
+                                    <th>Наименование</th>
+                                    <th>Количество</th>
+                                    <th>Стоимость</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>123</td>
+                                    <td>
+                                        <div class="flex_wrap">
+                                            <b>
+                                                Толстовка
+                                            </b>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        1шт
+                                    </td>
+                                    <td>
+                                        5 ₽
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>123</td>
+                                    <td>
+                                        <div class="flex_wrap">
+                                            <b>
+                                                Платье
+                                            </b>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        1шт
+                                    </td>
+                                    <td>
+                                        5 ₽
+                                    </td>
+                                </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="table_total">
+                            <div class="delivery">
+                                <div>
+                                    <b>
+                                        Способ оплаты:
+                                    </b>
+                                    <span>
+                                        Банковская карта
+                                    </span>
+                                </div>
+                                <div>
+                                    <b>
+                                        Способ получения:
+                                    </b>
+                                    <span>
+                                        Самовывоз
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="totally">
+                                <b>Итоговая стоимость:</b>
+                                10 ₽
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div data-innerswitched="order_switch2">
+                        <div class="table_wrap">
+                            <table class="second_table">
+                                <thead>
+                                <tr>
+                                    <th>Номер</th>
+                                    <th>Дата формирования</th>
+                                    <th>Стоимость</th>
+                                    <th>Статус</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>№60</td>
+                                    <td>
+                                        2022-05-16 11:09:09
+                                    </td>
+                                    <td>
+                                        5 ₽
+                                    </td>
+                                    <td>
+                                        <span class="status ">Получен</span>
+                                    </td>
+                                    <td>
+                                        <a href="/lk/id/60/">Подробнее</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>№59</td>
+                                    <td>
+                                        2022-05-15 15:32:28
+                                    </td>
+                                    <td>
+                                        5 ₽
+                                    </td>
+                                    <td>
+                                        <span class="status ">Получен</span>
+                                    </td>
+                                    <td>
+                                        <a href="/lk/id/59/">Подробнее</a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+</main>
+
+
+</body>
+
+</html>
