@@ -58,18 +58,18 @@
         </defs>
     </svg>
 </div>
-<?php if (!$this->userData):?>
+<?php /*if (!$this->userData):*/?>
     <div class="login-popup">
         <div class="order-popup__inner">
 
             <h2><span>Регистрация</span><span>Вход</span></h2>
             <form action="<?=$this->alias(['login' => 'registration'])?>" method="post">
                 <input type="text" name="name" required placeholder="Ваше имя"
-                       value="<?=$this->setFormValues('name')?>">
+                       value="<?=$this->setFormValues('name', 'userData')?>">
                 <input type="tel" name="phone" required placeholder="Телефон"
-                       value="<?=$this->setFormValues('phone')?>">
+                       value="<?=$this->setFormValues('phone', 'userData')?>">
                 <input type="email" name="email" required placeholder="E-mail"
-                       value="<?=$this->setFormValues('email')?>">
+                       value="<?=$this->setFormValues('email', 'userData')?>">
                 <input type="password" name="password" required placeholder="Пароль">
                 <input type="password" name="confirm_password" required placeholder="Подтверждение пароля">
                 <div class="send-order">
@@ -86,7 +86,7 @@
             </form>
         </div>
     </div>
-<?php endif;?>
+<?php /*endif;*/?>
 <?php $this->getScripts(); ?>
 <?php if ( !empty($_SESSION['res']['answer']) ):?>
     <div class="wq-message__wrap"><?=$_SESSION['res']['answer']?></div>

@@ -20,6 +20,9 @@ class LoginController extends BaseUser
                 case 'login':
                     $this->login();
                     break;
+                case 'logout':
+                    UserModel::instance()->logout();
+                    $this->redirect(PATH);
             }
         }
         throw new RouteException('Такой страницы не существует');
@@ -73,18 +76,32 @@ class LoginController extends BaseUser
         ]);
         if ($res) {
             $res = $res[0];
-            $field = $res['phone'] === $_POST['phone'] ? 'телефон' : 'email';
-            $this->sendError("Такой $field уже зарегистрирован");
+            if (empty($this->userData) || $this->userData['id'] !== $res['id']) {
+                $field = $res['phone'] === $_POST['phone'] ? 'телефон' : 'email';
+                $this->sendError("Такой $field уже зарегистрирован");
+            }
         }
         if ( !empty($_POST['password']) ) {
             $_POST['password'] = md5( $_POST['password'] );
         }
-        $id = $this->model->add('visitors', [
-            'return_id' => true
-        ]);
+        if ($this->userData) {
+            $this->model->edit('visitors', [
+                'where' => ['id' => $this->userData['id']]
+            ]);
+            $id = $this->userData['id'];
+        }
+        else {
+            $id = $this->model->add('visitors', [
+                'return_id' => true
+            ]);
+        }
+
         if ( !empty($id) ) {
             if (UserModel::instance()->checkUser($id)) {
-                $this->sendSuccess('Спасибо за регистрацию ' . $_POST['name']);
+                $message = !$this->userData ?
+                    "Спасибо за регистрацию {$_POST['name']}" :
+                    'Данные успешно изменены';
+                $this->sendSuccess($message);
             }
         }
         $this->sendError('Произошла внутренняя ошибка. Свяжитесь с администрацией сайта');
