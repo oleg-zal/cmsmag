@@ -126,7 +126,7 @@
                 <div class="about__description_text">
                     <?=$this->set['shot_content']?>
                 </div>
-                <a href="index.html" class="about__description_readmore readmore">Читать подробнее</a>
+                <a href="<?=$this->alias('about')?>" class="about__description_readmore readmore">Читать подробнее</a>
             </div>
             <div class="about__image">
                 <img src="<?=$this->img($this->set['promo_img'])?>" alt="">
